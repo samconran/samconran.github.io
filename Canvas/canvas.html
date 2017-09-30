@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Canvas</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/canvas.css"></link>
+</head>
+<body>
+  <div class="navbar">
+    <h1>MENU</h1>
+    <p>Please use this menu in order to change the project on display inside the canvas element.</p>
+    <ul>
+      <li><a href='#'>Clock</a></li>
+      <li><a href='#'>Snake</a></li>
+      <li><a href='#'>other</a></li>
+      <li><a href='#'>other</a></li>
+      <li><a href='#'>other</a></li>
+  </div>
+  <div class="title_container">
+    <h1 id="p_title" class="title">CANVAS</h1>
+  </div>
+  <div id="canvas_container">
+    <canvas id="canvas">
+      Sorry, your browser doesn't support Canvas!
+    </canvas>
+  </div>
+<div class="button_container">
+  <button class="button">HOME</button>
+</div>
+<div class='navButton'><span onclick="navBar()">&#9776;</span></div>
+<script src="control.js"></script>
+<script src="clock.js"></script>
+<script src="snake.js"></script>
+<script src="canvas.js"></script>
+</body>
+</html>

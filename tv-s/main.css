@@ -1,0 +1,36 @@
+.cont-down{
+  margin-top: 5%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.collapsible-header.active {
+  background-color: #EE6E73;
+  color: #FFF
+}
+
+.justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.add-show:hover {
+  color : #1de9b6;
+}
+
+#toast-container {
+  top: auto !important;
+  right: auto !important;
+  bottom: 10%;
+  left:7%;
+}
+
+#add-shows-starter {
+  margin: 10% 0;
+}
+
+#open-perm-modal {
+  margin-top: 20%;
+}
