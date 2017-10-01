@@ -24,12 +24,7 @@ var pageChange = function (a) {
   };
   t += 1000;
   setTimeout(function(){
-    var u = 'http://conrantest.com/'
-    if (window.location == u){
-      window.location += (a == 'aunt') ? (a + '/index.html') : (a + '/' +a+ '.html');
-    } else{
-      window.location = u + ((a == 'home') ? '' : a);
-    }
+    window.location = 'https://samconran.github.io/'
   }, t);
 };
 
