@@ -1,0 +1,17 @@
+body {
+  background-color: #211F20;
+}
+
+#player {
+  border: 1px solid black;
+  width: fit-content;
+  padding: 20px;
+  bottom: 15px;
+  left: 15px;
+  position: absolute;
+}
+
+#player buttons {
+  padding:10px;
+  background-color: white;
+}

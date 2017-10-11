@@ -5,15 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Spinnaker"/>
   <link rel="stylesheet" type="text/css" href="./Hub/hub.css"></link>
+  <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
 
-  <section>
-    <h>Under Construction!</h>
-    <p>My project homepage is currently being built using Vue.js. Go <a href="./tv-s/index.html">here</a> for my TV Sheduler project.</p>
-  </section>
+  <!--Navigation Bar-->
+  <div id="nav">
+    <ul>
+      <li>&#9776;</li>
+      <li class="menu-item">Projects</li>
+      <li class="menu-item">About Me</li>
+      <li class="menu-item">Contact</li>
+    </ul>
+  </div>
 
+  <!--Main Content-->
+  <div id="main-content">
+    <h1 class="title">Projects</h1>
+
+    <p>Here you can find a list of the projects that I host here on GitHub Pages. They're all their own, individual projects, but I host them all here as subdomains to make my life a bit easier.</p>
+
+    <table id="project-table">
+      <tr>
+        <td v-for="p in projects">
+          <a v-bind:href="p.link">
+            <div>
+              <h3>{{p.name}}</h3>
+              <p>{{p.description}}</p>
+            </div>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 <script type="text/javascript" src="./Hub/hub.js"></script>
 </body>
 </html>
