@@ -1,0 +1,135 @@
+:root {
+  --dark-grey: #1C1C1C;
+  --grey: #737373;
+  --white: #FFFFFF;
+  --red: #BA3B42;
+  --accent: #673840;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background-color: var(--dark-grey);
+  margin: 0;
+}
+
+#player {
+  display: none;
+}
+
+#logo {
+  width: 30vmin;
+}
+
+#navbar li.desktop {
+  display: none;
+}
+
+/* For mobile phones: */
+/*[class*="col-"] {
+    width: 100%;
+}*/
+
+#navbar ul {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+#navbar li {
+  box-sizing: border-box;
+  padding: 10px;
+  display: inline-block;
+  flex-grow: 1;
+  position: relative;
+}
+
+#navbar li * {
+  margin: auto;
+  display: block;
+}
+
+#navbar li>a {
+  display: block;
+  text-decoration: none;
+  color: var(--white);
+font-size: calc(25px + .5vmin);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    /*.col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}*/
+
+
+
+    #navbar li>a.selected {
+      color: var(--red);
+    }
+
+    #navbar li>a:not(.selected):hover {
+      color: var(--red);
+    }
+    #navbar li>a:not(.selected):active {
+      color: var(--accent);
+    }
+
+    #navbar .mobile {
+      display: none;
+    }
+
+    #navbar li.desktop {
+      display: inline-block;
+    }
+
+
+
+
+
+
+
+
+
+    #player {
+      display: block;
+      border: 1px solid black;
+      width: fit-content;
+      padding: 20px;
+      bottom: 15px;
+      left: 15px;
+      position: absolute;
+    }
+
+    #player button {
+      box-sizing: border-box;
+      padding:10px;
+      width: 50px;
+      height: 50px;
+      background: transparent;
+    }
+
+    #player > div {
+      float: left;
+    }
+
+    #album-art {
+      width: 50px;
+      height: 50px;
+    }
+}

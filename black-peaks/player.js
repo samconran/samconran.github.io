@@ -3,13 +3,14 @@ var player = {
   //Properties
   element : $('#playerAudio')[0],
   current : 0,
-  songs : ["Aeromancy", "All", "Catalyst", "Centred and One", "Flower of Life", "Outspoken", "To Survive", "Too Weak", "White Dove", "Written", "Zero"],
+  songs : ["Glass Built Castles", "Crooks", "Say You Will", "Hang 'Em High", "Set in Stone", "Saviour", "Statues of Shame", "Drones", "White Eyes", "For Those That Sleep for a Thousand Years Shall Soon Wake", "To Take the First Turn"],
   playlist : [],
 
   //Methods
   play : function () {
     let audio = player.element;
     audio.play();
+    console.log($(audio).attr('src'));
   },
 
   pause : function () {
@@ -17,8 +18,12 @@ var player = {
     audio.pause();
   },
 
-  next : function () {
-    player.current = player.current == (player.playlist.length - 1) ? 0 : player.current + 1;
+  skip : function (d) {
+    if (d == 'next')
+      player.current = (player.current == (player.playlist.length - 1)) ? 0 : player.current + 1;
+    else
+      player.current = (player.current == 0) ? (player.playlist.length - 1) : player.current - 1;
+      
     player.setSong(player.current)
 
     player.play();
@@ -40,20 +45,29 @@ var player = {
     player.playlist = songs.slice();
     player.setSong(current);
 
-    $('#playBtn').on('click', function() {
-      player.play();
-    });
-
-    $('#pauseBtn').on('click', function() {
-      player.pause();
+    $('#playPauseBtn').on('click', function() {
+      let btn = $('#playPauseBtn'),
+          p = 'playing';
+      if ($(btn).hasClass(p)) {
+        player.pause();
+        $(btn).removeClass(p).text('play_arrow');
+      }
+      else {
+        player.play();
+        $(btn).addClass(p).text('pause');;
+      }
     });
 
     $('#nextBtn').on('click', function() {
-      player.next();
+      player.skip('next');
+    });
+
+    $('#prevBtn').on('click', function() {
+      player.skip('prev');
     });
 
     $(player.element).on('ended', function() {
-       player.next();
+       player.skip('next');
     });
 
     $('#shuffleBtn').on('click', function() {

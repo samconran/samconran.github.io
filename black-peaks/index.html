@@ -2,19 +2,32 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Dorje</title>
-    <link rel="stylesheet" type="text/css" href="dorje.css">
+    <title>Black Peaks</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   </head>
   <body>
 
+    <nav id="navbar">
+      <ul>
+        <li class="mobile"><a class="material-icons">menu</a></li>
+        <li class="desktop"><a href="#main" class="selected">Home</a></li>
+        <li class="desktop"><a href="#news">News</a></li>
+        <li><img id="logo" src="assets/img/logo.png" alt="Logo"></li>
+        <li class="desktop"><a href="#tours">Tours</a></li>
+        <li class="desktop"><a href="#music">Music</a></li>
+        <li class="mobile"><a class="material-icons">headset</a></li>
+      </ul>
+    </nav>
+
     <div id="player">
       <div id="song-info">
-        <img id="album-art" src=""/>
+        <img id="album-art" src="assets/img/album_cover.jpg"/>
       </div>
       <div id="controls">
-        <button id="playBtn" class="material-icons">play_arrow</button>
-        <button id="pauseBtn"class="material-icons">pause</button>
+        <button id="playPauseBtn" class="material-icons">play_arrow</button>
+        <button id="prevBtn" class="material-icons">skip_previous</button>
         <button id="nextBtn" class="material-icons">skip_next</button>
         <button class="off material-icons" id="shuffleBtn">shuffle</button>
         <audio id="playerAudio"/>
@@ -23,6 +36,5 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="./player.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.7.0/jsmediatags.min.js"></script>
   </body>
 </html>
