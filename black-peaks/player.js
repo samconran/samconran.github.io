@@ -10,7 +10,7 @@ var player = {
   play : function () {
     let audio = player.element;
     audio.play();
-    console.log($(audio).attr('src'));
+    debug($(audio).attr('src'));
   },
 
   pause : function () {
@@ -23,7 +23,7 @@ var player = {
       player.current = (player.current == (player.playlist.length - 1)) ? 0 : player.current + 1;
     else
       player.current = (player.current == 0) ? (player.playlist.length - 1) : player.current - 1;
-      
+
     player.setSong(player.current)
 
     player.play();

@@ -7,9 +7,20 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+
+}
+
 body {
   background-color: var(--dark-grey);
   margin: 0;
+  animation: fadein 5s;
 }
 
 #player {
@@ -40,7 +51,6 @@ body {
 
 #navbar li {
   box-sizing: border-box;
-  padding: 10px;
   display: inline-block;
   flex-grow: 1;
   position: relative;
@@ -55,11 +65,28 @@ body {
   display: block;
   text-decoration: none;
   color: var(--white);
-font-size: calc(25px + .5vmin);
+  font-size: calc(40px + .5vmin);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#navbar li.desktop>a {
+  font-size: calc(25px + .5vmin);
+}
+
+div.page {
+  display: none;
+}
+
+div#content{
+  margin: 0 5vw;
+}
+
+div#content h1.title {
+  color: var(--white);
+  font-size: 5vmin;
 }
 
 @media only screen and (min-width: 768px) {
@@ -76,7 +103,6 @@ font-size: calc(25px + .5vmin);
     .col-10 {width: 83.33%;}
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}*/
-
 
 
     #navbar li>a.selected {
