@@ -14,13 +14,23 @@
   to {
     opacity: 1;
   }
+}
 
+@keyframes slide-in {
+    100% {
+      left: 0;
+    }
 }
 
 body {
   background-color: var(--dark-grey);
+  background-image: url(assets/img/txt.png);
   margin: 0;
-  animation: fadein 5s;
+  transition: fadein 5s;
+}
+
+h1, h2, h3, h4, h5, h6, p, li {
+  color: var(--white);
 }
 
 #player {
@@ -30,15 +40,6 @@ body {
 #logo {
   width: 30vmin;
 }
-
-#navbar li.desktop {
-  display: none;
-}
-
-/* For mobile phones: */
-/*[class*="col-"] {
-    width: 100%;
-}*/
 
 #navbar ul {
   list-style: none;
@@ -72,57 +73,129 @@ body {
   transform: translate(-50%, -50%);
 }
 
+#navbar li.desktop {
+  display: none;
+  border-bottom: 1px solid var(--white);
+}
+
 #navbar li.desktop>a {
   font-size: calc(25px + .5vmin);
+}
+
+#navbar li.desktop.selected {
+  border-bottom-color: var(--red);
+}
+
+#navbar li.desktop.selected>a{
+  color: var(--red);
+}
+
+#navbar li:not(.selected) > a:hover {
+  color: var(--red);
+  cursor: pointer;
+}
+#navbar li:not(.selected):active {
+  color: var(--accent);
 }
 
 div.page {
   display: none;
 }
 
-div#content{
+div.page.rendered{
+  display: block;
   margin: 0 5vw;
 }
 
-div#content h1.title {
+div.page h1.title {
   color: var(--white);
   font-size: 5vmin;
 }
 
+
+
+/*Music Page*/
+
+.page#music #album-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.page#music #album-cover-container {
+  display: inline-block;
+  box-sizing: border-box;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.page#music #album-cover {
+  border: 1px solid var(--white);
+  width: 50%;
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.page#music #album-title {
+  font-size: 8vmin;
+  display: inline-block;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.page#music #track-listing {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  font-size: 2vw;
+}
+
 @media only screen and (min-width: 768px) {
-    /* For desktop: */
-    /*.col-1 {width: 8.33%;}
-    .col-2 {width: 16.66%;}
-    .col-3 {width: 25%;}
-    .col-4 {width: 33.33%;}
-    .col-5 {width: 41.66%;}
-    .col-6 {width: 50%;}
-    .col-7 {width: 58.33%;}
-    .col-8 {width: 66.66%;}
-    .col-9 {width: 75%;}
-    .col-10 {width: 83.33%;}
-    .col-11 {width: 91.66%;}
-    .col-12 {width: 100%;}*/
+
+  #navbar {
+    margin: 0 0 40px;
+  }
+
+  #navbar .mobile {
+    display: none;
+  }
+
+  #navbar li.desktop {
+    display: inline-block;
+  }
+
+  /*Music Page*/
+
+  .page#music #album-container {
+    grid-template-rows: 10vh;
+  }
+
+  .page#music #album-cover-container {
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .page#music #album-cover {
+    width: 75%;
+  }
+
+  .page#music #album-title {
+    margin: 0;
+  }
 
 
-    #navbar li>a.selected {
-      color: var(--red);
-    }
-
-    #navbar li>a:not(.selected):hover {
-      color: var(--red);
-    }
-    #navbar li>a:not(.selected):active {
-      color: var(--accent);
-    }
-
-    #navbar .mobile {
-      display: none;
-    }
-
-    #navbar li.desktop {
-      display: inline-block;
-    }
+  .page#music #track-listing {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    font-size: 1.4vw;
+  }
 
 
 

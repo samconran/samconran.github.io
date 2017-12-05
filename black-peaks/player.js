@@ -74,9 +74,11 @@ var player = {
       if ($(this).hasClass('on')){
         $(this).removeClass('on').addClass('off');
         player.shuffle('off');
+        debug('Shuffle off!');
       } else {
         $(this).removeClass('off').addClass('on');
         player.shuffle('on');
+        debug('Shuffle on!');
       }
     });
   },

@@ -4,9 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Black Peaks</title>
+    <link rel="icon" type="image/png" href="assets/img/logo_icon.png"/>
     <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="main.js"></script>
   </head>
   <body>
 
@@ -14,35 +18,51 @@
       <ul>
         <li class="mobile"><a class="material-icons">menu</a></li>
         <li class="desktop"><a href="#main">Home</a></li>
-        <li class="desktop"><a href="#news">News</a></li>
+        <li class="desktop"><a href="#music">Music</a></li>
         <li><img id="logo" src="assets/img/logo.png" alt="Logo"></li>
         <li class="desktop"><a href="#tours">Tours</a></li>
-        <li class="desktop"><a href="#music">Music</a></li>
+        <li class="desktop"><a href="#merch">Merch</a></li>
         <li class="mobile"><a class="material-icons">headset</a></li>
       </ul>
     </nav>
 
     <section id="content-container">
-      <div id="content">
 
+      <div id="main" class="page">
+        <h1 class="title">HOME PAGE CONTENT!</h1>
       </div>
+
+      <div id="music" class="page">
+        <div id="album-container">
+          <div id="album-cover-container">
+            <img id="album-cover" src="assets/img/album_cover.jpg"/>
+          </div>
+          <h1 id="album-title">Statues</h1>
+          <ol id="track-listing">
+            <li class="song">Glass Built Castles</li>
+            <li class="song">Crooks</li>
+            <li class="song">Say You Will</li>
+            <li class="song">Hang 'Em High'</li>
+            <li class="song">Set in Stone</li>
+            <li class="song">Saviour</li>
+            <li class="song">Statues of Shame</li>
+            <li class="song">Drones</li>
+            <li class="song">White Eyes</li>
+            <li class="song">For Those That Sleep for a Thousand Years Shall Soon Wake</li>
+            <li class="song">To Take the First Turn</li>
+          </ol>
+        </div>
+      </div>
+
+      <div id="tours" class="page">
+        <h1 class="title">TOUR-RELATED CONTENT!</h1>
+      </div>
+
+      <div id="merch" class="page">
+        <h1 class="title">MERCH CONTENT!</h1>
+      </div>
+
     </section>
-
-    <div id="main" class="page">
-      <h1 class="title">HOME PAGE CONTENT!</h1>
-    </div>
-
-    <div id="news" class="page">
-      <h1 class="title">NEWS CONTENT!</h1>
-    </div>
-
-    <div id="tours" class="page">
-      <h1 class="title">TOUR-RELATED CONTENT!</h1>
-    </div>
-
-    <div id="music" class="page">
-      <h1 class="title">MUSIC-RELATED CONTENT!</h1>
-    </div>
 
     <div id="player">
       <div id="song-info">
@@ -56,9 +76,7 @@
         <audio id="playerAudio"/>
       </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="main.js"></script>
     <script src="player.js"></script>
+    <script src="db.js"></script>
   </body>
 </html>

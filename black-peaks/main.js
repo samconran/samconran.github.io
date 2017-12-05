@@ -9,11 +9,11 @@ $('document').ready(function(){
 function renderPage() {
   var page = location.hash || '#main';
 
-  var content = $(page).html() || '';
-  $('#content').html(content);
+  $('.page.rendered').removeClass('rendered');
+  $('.page' + page).addClass('rendered');
 
-  $('#navbar a').removeClass('selected');
-  $('#navbar a[href="'+page+'"]').addClass('selected');
+  $('#navbar li').removeClass('selected');
+  $('#navbar li').has('a[href="'+page+'"]').addClass('selected');
 }
 
 function debug (s, m) {
