@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6, p, li {
 
 #navbar li.desktop {
   display: none;
-  border-bottom: 1px solid var(--white);
+  border-bottom: 2px solid var(--white);
 }
 
 #navbar li.desktop>a {
