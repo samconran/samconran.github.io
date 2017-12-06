@@ -25,57 +25,68 @@
         <li class="mobile"><a class="material-icons">headset</a></li>
       </ul>
     </nav>
+    <main>
+      <section id="content-container">
 
-    <section id="content-container">
+        <div id="main" class="page">
+          <h1 class="title">HOME PAGE CONTENT!</h1>
+        </div>
 
-      <div id="main" class="page">
-        <h1 class="title">HOME PAGE CONTENT!</h1>
-      </div>
+        <!--MUSIC DIVS: (1) album overview - #music (2) song template - #song-->
 
-      <div id="music" class="page">
-        <div id="album-container">
-          <div id="album-cover-container">
-            <img id="album-cover" src="assets/img/album_cover.jpg"/>
+        <div id="music" class="page">
+          <div class="content-container">
+            <div id="album-cover-container">
+              <img id="album-cover" src="assets/img/album_cover.jpg"/>
+            </div>
+            <h1 id="album-title">Statues</h1>
+            <ol id="track-listing">
+              <li class="song">Glass Built Castles</li>
+              <li class="song">Crooks</li>
+              <li class="song">Say You Will</li>
+              <li class="song">Hang 'Em High'</li>
+              <li class="song">Set in Stone</li>
+              <li class="song">Saviour</li>
+              <li class="song">Statues of Shame</li>
+              <li class="song">Drones</li>
+              <li class="song">White Eyes</li>
+              <li class="song">For Those That Sleep for a Thousand Years Shall Soon Wake</li>
+              <li class="song">To Take the First Turn</li>
+            </ol>
+            <div id="purchase-buttons">
+              <a class="button" href="https://itunes.apple.com/gb/album/statues/id1138115548">iTunes</a>
+              <a class="button" href="https://www.amazon.co.uk/Statues-Black-Peaks/dp/B01J4ZV3FM">Amazon</a>
+              <a class="button" href="https://open.spotify.com/album/3oNtLCKnPZgQ8KxH23hL70">Spotify</a>
+              <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26716&cur=GBP">CD</a>
+              <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26717&cur=GB">Vinyl</a>
+            </div>
           </div>
-          <h1 id="album-title">Statues</h1>
-          <ol id="track-listing">
-            <li class="song">Glass Built Castles</li>
-            <li class="song">Crooks</li>
-            <li class="song">Say You Will</li>
-            <li class="song">Hang 'Em High'</li>
-            <li class="song">Set in Stone</li>
-            <li class="song">Saviour</li>
-            <li class="song">Statues of Shame</li>
-            <li class="song">Drones</li>
-            <li class="song">White Eyes</li>
-            <li class="song">For Those That Sleep for a Thousand Years Shall Soon Wake</li>
-            <li class="song">To Take the First Turn</li>
-          </ol>
+        </div>
+
+        <div id="tours" class="page">
+          <h1 class="title">TOUR-RELATED CONTENT!</h1>
+        </div>
+
+        <div id="merch" class="page">
+          <h1 class="title">MERCH CONTENT!</h1>
+        </div>
+
+      </section>
+
+      <div id="player">
+        <div id="song-info">
+          <img id="album-art" src="assets/img/album_cover.jpg"/>
+        </div>
+        <div id="controls">
+          <button id="playPauseBtn" class="material-icons">play_arrow</button>
+          <button id="prevBtn" class="material-icons">skip_previous</button>
+          <button id="nextBtn" class="material-icons">skip_next</button>
+          <button class="off material-icons" id="shuffleBtn">shuffle</button>
+          <audio id="playerAudio"/>
         </div>
       </div>
+    </main>
 
-      <div id="tours" class="page">
-        <h1 class="title">TOUR-RELATED CONTENT!</h1>
-      </div>
-
-      <div id="merch" class="page">
-        <h1 class="title">MERCH CONTENT!</h1>
-      </div>
-
-    </section>
-
-    <div id="player">
-      <div id="song-info">
-        <img id="album-art" src="assets/img/album_cover.jpg"/>
-      </div>
-      <div id="controls">
-        <button id="playPauseBtn" class="material-icons">play_arrow</button>
-        <button id="prevBtn" class="material-icons">skip_previous</button>
-        <button id="nextBtn" class="material-icons">skip_next</button>
-        <button class="off material-icons" id="shuffleBtn">shuffle</button>
-        <audio id="playerAudio"/>
-      </div>
-    </div>
     <script src="player.js"></script>
     <script src="db.js"></script>
   </body>

@@ -29,7 +29,7 @@ body {
   transition: fadein 5s;
 }
 
-h1, h2, h3, h4, h5, h6, p, li {
+h1, h2, h3, h4, h5, h6, p, li, a.button {
   color: var(--white);
 }
 
@@ -98,6 +98,8 @@ h1, h2, h3, h4, h5, h6, p, li {
   color: var(--accent);
 }
 
+/*Page set-up*/
+
 div.page {
   display: none;
 }
@@ -112,14 +114,13 @@ div.page h1.title {
   font-size: 5vmin;
 }
 
-
+div.page .content-container {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-row-gap: 10px;
+}
 
 /*Music Page*/
-
-.page#music #album-container {
-  display: grid;
-  grid-template-columns: 50% 50%;
-}
 
 .page#music #album-cover-container {
   display: inline-block;
@@ -132,7 +133,7 @@ div.page h1.title {
 
 .page#music #album-cover {
   border: 1px solid var(--white);
-  width: 50%;
+  width: 85%;
   display: block;
   position: relative;
   left: 50%;
@@ -144,18 +145,60 @@ div.page h1.title {
   font-size: 8vmin;
   display: inline-block;
   grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-end: 5;
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
 .page#music #track-listing {
+  margin: 0;
   grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 5;
   grid-row-start: 2;
   grid-row-end: 3;
-  font-size: 2vw;
+  font-size: 2.8vw;
 }
+
+.page#music #purchase-buttons {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  display: flex;
+  justify-content: center;
+  margin: 2vh 0 0;
+}
+
+.page#music #purchase-buttons .button {
+  border: 1px solid var(--white);
+  background-color: var(--dark-grey);
+  padding: 15px;
+  display: block;
+  flex-grow: 1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.page#music #purchase-buttons .button:hover {
+  color: var(--red);
+  border-color: var(--red);
+  cursor: pointer;
+}
+
+.page#music #purchase-buttons .button:active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+
+
+
+
+
+
+
+
+/*DESKTOP ONLY*/
 
 @media only screen and (min-width: 768px) {
 
@@ -173,30 +216,35 @@ div.page h1.title {
 
   /*Music Page*/
 
-  .page#music #album-container {
-    grid-template-rows: 10vh;
-  }
-
   .page#music #album-cover-container {
+    grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
   }
 
   .page#music #album-cover {
-    width: 75%;
+    width: 70%;
   }
 
   .page#music #album-title {
+    grid-column-start: 3;
     margin: 0;
   }
 
-
   .page#music #track-listing {
-    grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-start: 3;
+    grid-column-end: 5;
     font-size: 1.4vw;
   }
 
+  .page#music #purchase-buttons {
+    justify-content: space-around;
+  }
+
+  .page#music #purchase-buttons .button {
+    flex-grow: 0;
+    width: 5vw;
+  }
 
 
 
@@ -206,7 +254,7 @@ div.page h1.title {
 
 
     #player {
-      display: block;
+      /*display: block;*/
       border: 1px solid black;
       width: fit-content;
       padding: 20px;
