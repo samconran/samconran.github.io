@@ -50,11 +50,11 @@ var player = {
           p = 'playing';
       if ($(btn).hasClass(p)) {
         player.pause();
-        $(btn).removeClass(p).text('play_arrow');
+        $(btn).removeClass(p).removeClass('fa-pause').addClass('fa-play');
       }
       else {
         player.play();
-        $(btn).addClass(p).text('pause');;
+        $(btn).addClass(p).removeClass('fa-play').addClass('fa-pause');
       }
     });
 

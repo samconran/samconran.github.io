@@ -6,7 +6,7 @@
     <title>Black Peaks</title>
     <link rel="icon" type="image/png" href="assets/img/logo_icon.png"/>
     <link rel="stylesheet" type="text/css" href="main.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://use.fontawesome.com/f7885d4c3b.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -16,13 +16,13 @@
 
     <nav id="navbar">
       <ul>
-        <li class="mobile"><a class="material-icons">menu</a></li>
+        <li class="mobile"><a class="fa fa-bars"></a></li>
         <li class="desktop"><a href="#main">Home</a></li>
         <li class="desktop"><a href="#music">Music</a></li>
         <li><img id="logo" src="assets/img/logo.png" alt="Logo"></li>
         <li class="desktop"><a href="#tours">Tours</a></li>
         <li class="desktop"><a href="#merch">Merch</a></li>
-        <li class="mobile"><a class="material-icons">headset</a></li>
+        <li class="mobile"><a class="fa fa-music"></a></li>
       </ul>
     </nav>
     <main>
@@ -41,17 +41,17 @@
             </div>
             <h1 id="album-title">Statues</h1>
             <ol id="track-listing">
-              <li class="song">Glass Built Castles</li>
-              <li class="song">Crooks</li>
-              <li class="song">Say You Will</li>
-              <li class="song">Hang 'Em High'</li>
-              <li class="song">Set in Stone</li>
-              <li class="song">Saviour</li>
-              <li class="song">Statues of Shame</li>
-              <li class="song">Drones</li>
-              <li class="song">White Eyes</li>
-              <li class="song">For Those That Sleep for a Thousand Years Shall Soon Wake</li>
-              <li class="song">To Take the First Turn</li>
+              <li class="song"><span class="clickable">Glass Built Castles</span></li>
+              <li class="song"><span class="clickable">Crooks</span></li>
+              <li class="song"><span class="clickable">Say You Will</span></li>
+              <li class="song"><span class="clickable">Hang 'Em High'</span></li>
+              <li class="song"><span class="clickable">Set in Stone</span></li>
+              <li class="song"><span class="clickable">Saviour</span></li>
+              <li class="song"><span class="clickable">Statues of Shame</span></li>
+              <li class="song"><span class="clickable">Drones</span></li>
+              <li class="song"><span class="clickable">White Eyes</span></li>
+              <li class="song"><span class="clickable">For Those That Sleep for a Thousand Years Shall Soon Wake</span></li>
+              <li class="song"><span class="clickable">To Take the First Turn</span></li>
             </ol>
             <div id="purchase-buttons">
               <a class="button" href="https://itunes.apple.com/gb/album/statues/id1138115548">iTunes</a>
@@ -59,6 +59,25 @@
               <a class="button" href="https://open.spotify.com/album/3oNtLCKnPZgQ8KxH23hL70">Spotify</a>
               <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26716&cur=GBP">CD</a>
               <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26717&cur=GB">Vinyl</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="song" class="page">
+          <div class="content-container">
+            <a id="music-back-btn" class="clickable fa fa-angle-left" href="#music"></a>
+            <h1 id="song-title" class="red">ERROR</h1>
+            <div id="links-container" class="song-content-container">
+              <h1>Listen</h1>
+              <div id="link-buttons">
+                <a class="clickable fa fa-play" aria-hidden="true"></a>
+                <a id="song-yt-link" class="clickable fa fa-youtube-square" href=""></a>
+                <a class="clickable fa fa-spotify" href=""></a>
+              </div>
+            </div>
+            <div id="lyrics-container" class="song-content-container">
+              <h1>Lyrics</h1>
+              <p id="song-lyrics">Lyrics could not be found for this song...</p>
             </div>
           </div>
         </div>
@@ -78,10 +97,10 @@
           <img id="album-art" src="assets/img/album_cover.jpg"/>
         </div>
         <div id="controls">
-          <button id="playPauseBtn" class="material-icons">play_arrow</button>
-          <button id="prevBtn" class="material-icons">skip_previous</button>
-          <button id="nextBtn" class="material-icons">skip_next</button>
-          <button class="off material-icons" id="shuffleBtn">shuffle</button>
+          <button id="playPauseBtn" class="fa fa-play"></button>
+          <button id="prevBtn" class="fa fa-step-forward"></button>
+          <button id="nextBtn" class="fa fa-step-backward"></button>
+          <button class="off fa fa-random" id="shuffleBtn"></button>
           <audio id="playerAudio"/>
         </div>
       </div>
