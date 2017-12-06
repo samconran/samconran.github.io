@@ -195,7 +195,7 @@ div.page .content-container {
   grid-column-end: 5;
   grid-row-start: 2;
   grid-row-end: 3;
-  font-size: 2.8vw;
+  font-size: calc(20px + .1vw);
 }
 
 .page#music #purchase-buttons {
