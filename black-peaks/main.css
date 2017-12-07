@@ -51,7 +51,7 @@ a {
 .button {
   border: 1px solid var(--white);
   background-color: var(--dark-grey);
-  padding: 15px;
+  padding: calc(10px + .1vw);
   display: block;
   text-align: center;
 }
