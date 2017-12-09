@@ -54,11 +54,11 @@
               <li class="song"><span class="clickable">To Take the First Turn</span></li>
             </ol>
             <div id="purchase-buttons">
-              <a class="button" href="https://itunes.apple.com/gb/album/statues/id1138115548">iTunes</a>
-              <a class="button" href="https://www.amazon.co.uk/Statues-Black-Peaks/dp/B01J4ZV3FM">Amazon</a>
-              <a class="button" href="https://open.spotify.com/album/3oNtLCKnPZgQ8KxH23hL70">Spotify</a>
-              <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26716&cur=GBP">CD</a>
-              <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26717&cur=GB">Vinyl</a>
+              <a class="button" href="https://itunes.apple.com/gb/album/statues/id1138115548" target="_blank">iTunes</a>
+              <a class="button" href="https://www.amazon.co.uk/Statues-Black-Peaks/dp/B01J4ZV3FM" target="_blank">Amazon</a>
+              <a class="button" href="https://open.spotify.com/album/3oNtLCKnPZgQ8KxH23hL70" target="_blank">Spotify</a>
+              <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26716&cur=GBP" target="_blank">CD</a>
+              <a class="button" href="https://easyliferecords.tmstor.es/cart/product.php?id=26717&cur=GB" target="_blank">Vinyl</a>
             </div>
           </div>
         </div>
@@ -70,9 +70,9 @@
             <div id="links-container" class="song-content-container">
               <h1>Listen</h1>
               <div id="link-buttons">
-                <a class="clickable fa fa-play" aria-hidden="true"></a>
-                <a id="song-yt-link" class="clickable fa fa-youtube-square" href=""></a>
-                <a class="clickable fa fa-spotify" href=""></a>
+                <a id="song-play-btn" class="clickable fa fa-play" target="_blank" aria-hidden="true"></a>
+                <a id="song-yt-link" class="clickable fa fa-youtube-square" target="_blank" href="" aria-hidden="true"></a>
+                <a id="song-spot-link" class="clickable fa fa-spotify" target="_blank" href="" aria-hidden="true"></a>
               </div>
             </div>
             <div id="lyrics-container" class="song-content-container">
@@ -83,7 +83,9 @@
         </div>
 
         <div id="tours" class="page">
-          <h1 class="title">TOUR-RELATED CONTENT!</h1>
+          <h1 id="tour-title">Tour Dates</h1>
+          <div class="content-container">
+          </div>
         </div>
 
         <div id="merch" class="page">
@@ -107,6 +109,6 @@
     </main>
 
     <script src="player.js"></script>
-    <script src="db.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
   </body>
 </html>

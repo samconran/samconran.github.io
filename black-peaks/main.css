@@ -43,8 +43,13 @@ a {
   text-decoration: none;
 }
 
-.clickable:hover {
+.clickable:hover, .clickable:hover * {
   color: var(--red);
+  cursor: pointer;
+}
+
+.clickable:active, .clickable:active * {
+  color: var(--accent);
   cursor: pointer;
 }
 
@@ -156,7 +161,6 @@ div.page h1.title {
 div.page .content-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-row-gap: 10px;
 }
 
 /*Music Page*/
@@ -272,7 +276,80 @@ div.page .content-container {
   margin: 15px 0;
 }
 
+/*TOURS PAGE*/
 
+.page#tours .content-container {
+  grid-template-columns: 50% 50%;
+}
+
+.page#tours #tour-title {
+  font-size: calc(40px + 1vw);
+  text-align: center;
+  margin: 0;
+}
+
+.page#tours .tour-date {
+  border-bottom: 2px solid var(--red);
+  box-sizing: border-box;
+  padding: 1vw
+}
+
+.page#tours .tour-date.selected {
+  border-bottom: none;
+}
+
+.page#tours .tour-date * {
+  text-shadow: #000 0px -1px 4px;
+}
+
+.page#tours .tour-date.selected * {
+  color: var(--red);
+}
+
+.page#tours .tour-date * {
+  text-align: center;
+  margin: 0;
+}
+
+.page#tours .tour-date h1 {
+  font-size: calc(15px + 1.5vw)
+}
+
+.page#tours .tour-date p {
+  font-size: calc(10px + 1.5vw)
+}
+
+.page#tours .tour-date-info {
+
+  box-sizing: border-box;
+  padding: 3.5vw;
+  grid-column-start: 1;
+  grid-column-end: 3;
+
+  display: grid;
+  grid-template-columns: 50% 50%
+}
+
+.page#tours .tour-date-location, .tour-date-time {
+  margin: 0;
+  text-align: left;
+  font-size: calc(10px + 1.3vw);
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.page#tours .tour-date-info .button-container {
+  margin-top: 2vw;
+  display: flex;
+  justify-content: space-around;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.page#tours .tour-date-info .button-container .button{
+  align-self: baseline;
+  font-size: calc(10px + .5vw);
+}
 
 
 
@@ -349,8 +426,29 @@ div.page .content-container {
     text-align: center;
   }
 
+  /*TOURS PAGE*/
 
+  .page#tours .content-container {
+    grid-template-columns: 25% 25% 25% 25%;
+  }
 
+  .page#tours .tour-date-info {
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+
+  .page#tours .tour-date-info .button-container {
+    margin: 0;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row: 1;
+  }
+
+  .page#tours .tour-date-location {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row: 1;
+  }
 
 
 
