@@ -57,8 +57,8 @@
 
     page = (page === '#song') ? '#music' : page;
 
-    $('#navbar li').removeClass('selected');
-    $('#navbar li').has('a[href="'+page+'"]').addClass('selected');
+    $('#navbar li, #mobile-navbar li').removeClass('selected');
+    $('#navbar li, #mobile-navbar li').has('a[href="'+page+'"]').addClass('selected');
   }
 
 
@@ -210,6 +210,15 @@
 $('document').ready(function(){
   window.onhashchange = black_peaks.renderPage;
   black_peaks.renderPage();
+
+  //'Menu' nav button for mobile:
+  $('#navbar #mob-nav').on('click', function(){
+    $('#mobile-navbar').toggle();
+  });
+
+  $('#mobile-navbar a').on('click', function(){
+    $('#mobile-navbar').toggle();
+  });
 
   $('#music #track-listing .clickable').on('click', function(e){
     var index = $(this).parent().index();
