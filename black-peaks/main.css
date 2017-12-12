@@ -7,26 +7,10 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slide-in {
-    100% {
-      left: 0;
-    }
-}
-
 body {
   background-color: var(--dark-grey);
   background-image: url(assets/img/txt.png);
   margin: 0;
-  transition: fadein 5s;
 }
 
 /*GENERAL/GLOBAL CSS RULES*/
@@ -70,6 +54,16 @@ a {
 .button:active {
   color: var(--accent);
   border-color: var(--accent);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-container .button{
+  align-self: baseline;
+  font-size: calc(10px + .5vw);
 }
 
 
@@ -142,7 +136,7 @@ a {
   color: var(--accent);
 }
 
-/*Page set-up*/
+/*General page set-up*/
 
 div.page {
   display: none;
@@ -154,8 +148,10 @@ div.page.rendered{
 }
 
 div.page h1.title {
+  margin: 0;
   color: var(--white);
-  font-size: 5vmin;
+  font-size: calc(40px + 1vw);
+  text-align: center;
 }
 
 div.page .content-container {
@@ -282,12 +278,6 @@ div.page .content-container {
   grid-template-columns: 50% 50%;
 }
 
-.page#tours #tour-title {
-  font-size: calc(40px + 1vw);
-  text-align: center;
-  margin: 0;
-}
-
 .page#tours .tour-date {
   border-bottom: 2px solid var(--red);
   box-sizing: border-box;
@@ -325,7 +315,6 @@ div.page .content-container {
   padding: 3.5vw;
   grid-column-start: 1;
   grid-column-end: 3;
-
   display: grid;
   grid-template-columns: 50% 50%
 }
@@ -340,16 +329,40 @@ div.page .content-container {
 
 .page#tours .tour-date-info .button-container {
   margin-top: 2vw;
-  display: flex;
-  justify-content: space-around;
   grid-column-start: 1;
   grid-column-end: 3;
 }
 
-.page#tours .tour-date-info .button-container .button{
-  align-self: baseline;
-  font-size: calc(10px + .5vw);
+/*MERCH STORE PAGE*/
+
+.page#merch .content-container {
+  grid-template-columns: 50% 50%;
 }
+
+.page#merch .product {
+  position: relative;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+.page#merch .product-thumbnail {
+  width: 100%;
+}
+
+.page#merch .purchase-buttons {
+  width: 75%;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.page#merch .purchase-buttons .button {
+  margin: 10px;
+}
+
+
 
 
 
@@ -450,6 +463,23 @@ div.page .content-container {
     grid-row: 1;
   }
 
+  /*MERCH STORE PAGE*/
+  .page#merch .content-container {
+    grid-template-columns: 25% 25% 25% 25%;
+  }
+
+  .page#merch .purchase-buttons {
+    display: block;
+    opacity: 0;
+  }
+
+  .page#merch .product:hover .purchase-buttons {
+    opacity: 1;
+  }
+
+  .page#merch .product:hover .product-thumbnail {
+    filter: brightness(50%);
+  }
 
 
 

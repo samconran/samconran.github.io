@@ -47,7 +47,7 @@
   //RenderPage function for adding/removing classes (CSS looks for these for visibiity) and firing setup functions
   black_peaks.renderPage = function() {
 
-    var page = location.hash || '#main';
+    var page = location.hash || '#home';
 
     if(page == '#tours')
       black_peaks.page_setup[page]();
