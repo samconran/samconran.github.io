@@ -10,7 +10,7 @@ var player = {
   play : function () {
     let audio = player.element;
     audio.play();
-    debug($(audio).attr('src'));
+    black_peaks.debug($(audio).attr('src'));
   },
 
   pause : function () {
@@ -30,7 +30,7 @@ var player = {
   },
 
   shuffle : function (state) {
-    if (state === 'on') {
+    if (state === 'shuffle-on') {
       player.playlist = shuffleArray(player.playlist)
     } else {
       player.playlist = player.songs.slice();
@@ -71,14 +71,14 @@ var player = {
     });
 
     $('#shuffleBtn').on('click', function() {
-      if ($(this).hasClass('on')){
-        $(this).removeClass('on').addClass('off');
-        player.shuffle('off');
-        debug('Shuffle off!');
+      if ($(this).hasClass('shuffle-on')){
+        $(this).removeClass('shuffle-on').addClass('shuffle-off');
+        player.shuffle('shuffle-off');
+        black_peaks.debug('Shuffle shuffle-off!');
       } else {
-        $(this).removeClass('off').addClass('on');
-        player.shuffle('on');
-        debug('Shuffle on!');
+        $(this).removeClass('shuffle-off').addClass('shuffle-on');
+        player.shuffle('shuffle-on');
+        black_peaks.debug('Shuffle on!');
       }
     });
   },

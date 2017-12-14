@@ -416,6 +416,31 @@ div.page .content-container {
 
 
 
+
+/*FOOTER DESIGN*/
+
+main {
+  min-height: calc(90vh);
+}
+
+footer {
+  width: 100%;
+  border-top: 2px solid var(--red);
+}
+
+footer #social-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin: 1% 0;
+}
+
+footer #social-buttons * {
+  font-size: calc(25px + 1vw);
+}
+
+
+
+
 /*DESKTOP ONLY*/
 
 @media only screen and (min-width: 768px) {
@@ -536,30 +561,72 @@ div.page .content-container {
 
 
 
+
+
+
     #player {
-      /*display: block;*/
-      border: 1px solid black;
-      width: fit-content;
-      padding: 20px;
-      bottom: 15px;
-      left: 15px;
-      position: absolute;
-    }
-
-    #player button {
-      box-sizing: border-box;
-      padding:10px;
-      width: 50px;
-      height: 50px;
-      background: transparent;
-    }
-
-    #player > div {
       float: left;
+      display: block;
+      width: 12vw;
+      height: 12vw;
+      position: relative;
+      background-image: url('assets/img/album_cover.jpg');
+      background-size: 100% auto;
     }
 
-    #album-art {
-      width: 50px;
-      height: 50px;
+    #player #album-art {
+      display: none;
+    }
+
+    #player .content-container {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #player #controls-lv1, #controls-lv2 {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    #player #song-info h1 {
+      font-size: 1.8vw;
+      margin: 0;
+    }
+
+    #player #controls-lv1 * {
+      font-size: 2.4vw;
+      margin: 10% 0;
+    }
+
+    #player #controls-lv2 * {
+      font-size: 1.8vw;
+    }
+
+    #player #song-progress[value] {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      -webkit-appearance: none;
+      border: none;
+    }
+
+    #player #song-progress[value]::-webkit-progress-bar {
+    background-color: var(--grey);
+    box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+    }
+
+    #player #song-progress[value]::-webkit-progress-value {
+        position: relative;
+        background-color: var(--red);
+    }
+
+
+
+    .player-button {
+      font-size: 1vw;
     }
 }

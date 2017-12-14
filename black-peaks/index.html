@@ -16,21 +16,21 @@
 
     <nav id="navbar">
       <ul>
-        <li id="mob-nav" class="mobile"><a class="fa fa-bars"></a></li>
+        <li id="mob-nav" class="mobile"><a class="fa fa-bars" aria-hidden="true"></a></li>
         <li class="desktop"><a href="#home">Home</a></li>
         <li class="desktop"><a href="#music">Music</a></li>
         <li><img id="logo" src="assets/img/logo.png" alt="Logo"></li>
         <li class="desktop"><a href="#tours">Tours</a></li>
         <li class="desktop"><a href="#merch">Merch</a></li>
-        <li id="mob-music" class="mobile"><a class="fa fa-music"></a></li>
+        <li id="mob-music" class="mobile"><a class="fa fa-music" aria-hidden="true"></a></li>
       </ul>
     </nav>
 
     <nav id="mobile-navbar">
       <header id="mob-nav-header">
-        <p class="fa fa-bars red"></p>
+        <p class="fa fa-bars red" aria-hidden="true"></p>
         <h1>Menu</h1>
-        <a class="clickable fa fa-times"></a>
+        <a class="clickable fa fa-times" aria-hidden="true"></a>
       </header>
       <ul>
         <li class="clickable"><a href="#home">Home</a></li>
@@ -81,7 +81,7 @@
 
         <div id="song" class="page">
           <div class="content-container">
-            <a id="music-back-btn" class="clickable fa fa-angle-left" href="#music"></a>
+            <a id="music-back-btn" class="clickable fa fa-angle-left" href="#music" aria-hidden="true"></a>
             <h1 id="song-title" class="red">ERROR</h1>
             <div id="links-container" class="song-content-container">
               <h1>Listen</h1>
@@ -145,20 +145,44 @@
         </div>
 
       </section>
+    </main>
+
+    <footer>
 
       <div id="player">
-        <div id="song-info">
+        <div class="content-container">
           <img id="album-art" src="assets/img/album_cover.jpg"/>
+          <div id="song-info">
+            <h1>02. Crooks</h1>
+          </div>
+          <div id="controls-lv1">
+            <a id="prevBtn" class="player-button clickable fa fa-step-backward" aria-hidden="true"></a>
+            <a id="playPauseBtn" class="player-button clickable fa fa-play" aria-hidden="true"></a>
+            <a id="nextBtn" class="player-button clickable fa fa-step-forward" aria-hidden="true"></a>
+          </div>
+          <div id="controls-lv2">
+            <a id="playlist" class="player-button clickable fa fa-list" aria-hidden="true"></a>
+
+            <a id="shuffleBtn" class="player-button clickable shuffle-off fa fa-random" aria-hidden="true"></a>
+          </div>
+          <progress id="song-progress" value="70" max="100"></progress>
         </div>
-        <div id="controls">
-          <button id="playPauseBtn" class="fa fa-play"></button>
-          <button id="prevBtn" class="fa fa-step-forward"></button>
-          <button id="nextBtn" class="fa fa-step-backward"></button>
-          <button class="off fa fa-random" id="shuffleBtn"></button>
-          <audio id="playerAudio"/>
-        </div>
+
+        <audio id="playerAudio">
+          Your browser does not support the <code>audio</code> element.
+        </audio>
       </div>
-    </main>
+
+
+      <div id="social-buttons">
+        <a class="clickable fa fa-facebook" target="_blank" aria-hidden="true"></a>
+        <a class="clickable fa fa-twitter" target="_blank" aria-hidden="true"></a>
+        <a class="clickable fa fa-youtube-square" target="_blank" href="" aria-hidden="true"></a>
+        <a class="clickable fa fa-instagram" target="_blank" aria-hidden="true"></a>
+        <a class="clickable fa fa-spotify" target="_blank" href="" aria-hidden="true"></a>
+      </div>
+
+    </footer>
 
     <script src="player.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
