@@ -222,6 +222,10 @@ $('document').ready(function(){
     $(this).parent().parent().toggle();
   });
 
+  $('#mobile-navbar ul a').on('click', function() {
+    $('#mobile-navbar').toggle();
+  });
+
 
   $('#music #track-listing .clickable').on('click', function(e){
     var index = $(this).parent().index();
