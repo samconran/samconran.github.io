@@ -26,8 +26,8 @@
       </ul>
     </nav>
 
-    <nav id="mobile-navbar">
-      <header id="mob-nav-header">
+    <nav id="mobile-navbar" class="mob-modal">
+      <header id="mob-nav-header" class="mob-modal-header">
         <p class="fa fa-bars red" aria-hidden="true"></p>
         <h1>Menu</h1>
         <a class="clickable fa fa-times" aria-hidden="true"></a>
@@ -149,8 +149,13 @@
 
     <footer>
 
-      <div id="player">
-        <div class="content-container">
+      <div id="player" class="mob-modal">
+        <header id="mob-player-header" class="mob-modal-header">
+          <a class="clickable fa fa-times" aria-hidden="true"></a>
+          <h1>Menu</h1>
+          <p class="fa fa-bars red" aria-hidden="true"></p>
+        </header>
+        <div class="controls-container">
           <img id="album-art" src="assets/img/album_cover.jpg"/>
           <div id="song-info">
             <h1>02. Crooks</h1>
@@ -162,10 +167,8 @@
           </div>
           <div id="controls-lv2">
             <a id="playlist" class="player-button clickable fa fa-list" aria-hidden="true"></a>
-
             <a id="shuffleBtn" class="player-button clickable shuffle-off fa fa-random" aria-hidden="true"></a>
           </div>
-          <progress id="song-progress" value="70" max="100"></progress>
         </div>
 
         <audio id="playerAudio">
@@ -180,6 +183,10 @@
         <a class="clickable fa fa-youtube-square" target="_blank" href="" aria-hidden="true"></a>
         <a class="clickable fa fa-instagram" target="_blank" aria-hidden="true"></a>
         <a class="clickable fa fa-spotify" target="_blank" href="" aria-hidden="true"></a>
+      </div>
+
+      <div>
+
       </div>
 
     </footer>

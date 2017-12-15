@@ -211,14 +211,17 @@ $('document').ready(function(){
   window.onhashchange = black_peaks.renderPage;
   black_peaks.renderPage();
 
-  //'Menu' nav button for mobile:
-  $('#navbar #mob-nav').on('click', function(){
-    $('#mobile-navbar').toggle();
+  //General function for opening the mobile-nav or mobile-player screens
+  $('#navbar .mobile a').on('click', function(){
+    var target = ($(this).parent().attr('id') == 'mob-nav') ? '#mobile-navbar' : '#player';
+     $(target).toggle();
   });
 
-  $('#mobile-navbar a').on('click', function(){
-    $('#mobile-navbar').toggle();
+  //When one of the mobile modal's close buttons is clicked, close the modal
+  $('.mob-modal .mob-modal-header a').on('click', function(){
+    $(this).parent().parent().toggle();
   });
+
 
   $('#music #track-listing .clickable').on('click', function(e){
     var index = $(this).parent().index();

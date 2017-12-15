@@ -8,13 +8,16 @@ var player = {
 
   //Methods
   play : function () {
-    let audio = player.element;
+    $('#playPauseBtn').addClass('playing').removeClass('fa-play').addClass('fa-pause');
+    var audio = player.element;
     audio.play();
-    black_peaks.debug($(audio).attr('src'));
+    black_peaks.debug($(audio).attr('src') + '\nCurrent: ' + player.current);
   },
 
   pause : function () {
-    let audio = player.element;
+    $('#playPauseBtn').removeClass('playing').removeClass('fa-pause').addClass('fa-play');
+
+    var audio = player.element;
     audio.pause();
   },
 
@@ -39,23 +42,17 @@ var player = {
   },
 
   init : function () {
-    let songs = player.songs,
+    var songs = player.songs,
         current = player.current;
 
     player.playlist = songs.slice();
     player.setSong(current);
 
     $('#playPauseBtn').on('click', function() {
-      let btn = $('#playPauseBtn'),
-          p = 'playing';
-      if ($(btn).hasClass(p)) {
+      if ($('#playPauseBtn').hasClass('playing'))
         player.pause();
-        $(btn).removeClass(p).removeClass('fa-pause').addClass('fa-play');
-      }
-      else {
+      else
         player.play();
-        $(btn).addClass(p).removeClass('fa-play').addClass('fa-pause');
-      }
     });
 
     $('#nextBtn').on('click', function() {
@@ -84,7 +81,7 @@ var player = {
   },
 
   setSong : function (song) {
-    let playlist = player.playlist,
+    var playlist = player.playlist,
         audio = player.element;
 
     song = (isNaN(song) ? song : playlist[song]);
