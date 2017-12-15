@@ -42,6 +42,8 @@ var player = {
   },
 
   init : function () {
+    player.element.volume = 0.5;
+    
     var songs = player.songs,
         current = player.current;
 
