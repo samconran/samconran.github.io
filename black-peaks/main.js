@@ -17,8 +17,11 @@
     data : {},
     //An object containing setup functions for pages (to be added in later)
     page_setup: {},
-    //A user object containing user information (info to be added)
-    user: {},
+    //A user object containing user information (cart object and playlist array)
+    user: {
+      cart: {},
+      playlist: []
+    },
     //A reference to the firebase databse
     db: firebase.database(),
     //A variable set to true if there is a 'debug' cookie with a value of 'true'
@@ -44,8 +47,47 @@
     };
   });
 
+
+  black_peaks.user.save = function() {
+    var data = {
+      cart: black_peaks.user.cart,
+      playlist: black_peaks.user.playlist
+    }
+    localStorage.setItem('black-peaks_user-data', JSON.stringify(data));
+  }
+
+  black_peaks.user.load = function() {
+    var data = JSON.parse(localStorage.getItem('black-peaks_user-data'));
+    if (!data)
+      return false;
+    black_peaks.debug(data);
+    black_peaks.user.cart = data.cart;
+    black_peaks.user.playlist = data.playlist;
+  }
+  black_peaks.user.load();
+
+  black_peaks.user.addCart = function(p) {
+    var cart = black_peaks.user.cart,
+        db = black_peaks.data.merch[p];
+    if (cart[p]) {
+      cart[p].quantity++;
+    } else {
+      cart[p] = {
+        name: db.name,
+        price: db.price,
+        quantity: 1
+      }
+    }
+    black_peaks.debug(cart);
+    black_peaks.user.save();
+    black_peaks.debug('saved!');
+  }
+
   //RenderPage function for adding/removing classes (CSS looks for these for visibiity) and firing setup functions
   black_peaks.renderPage = function() {
+
+    if (location.pathname.indexOf('/shop/') > -1)
+      return;
 
     var page = location.hash || '#home';
 
@@ -56,6 +98,7 @@
     $('.page' + page).addClass('rendered');
 
     page = (page === '#song') ? '#music' : page;
+    page = (page === '#product-page') ? '#merch' : page;
 
     $('#navbar li, #mobile-navbar li').removeClass('selected');
     $('#navbar li, #mobile-navbar li').has('a[href="'+page+'"]').addClass('selected');
@@ -73,6 +116,18 @@
     $('#song #song-spot-link').attr('href', r.spotLink);
 
     $('#song #song-lyrics').html($('#song #song-lyrics').text().replace(/\\n/g, '<br/>'));
+  }
+
+  //Add functions to black_peaks.page_setup for products
+  black_peaks.page_setup['#product-page'] = function (i){
+    var r = black_peaks.data.merch[i];
+    black_peaks.debug('Product ID clicked: ' + i);
+
+    $('#product-page #product-image').attr('src', 'assets/img/store/' +i+ '.jpg.');
+    $('#product-page #product-title').text(r.name);
+    $('#product-page #product-price').text(r.price);
+    $('#product-page #product-add-cart').attr('data-id', i);
+    $('#product-page #product-description').text(r.description);
   }
 
   //Add functions to black_peaks.page_setup for tours
@@ -166,7 +221,7 @@
         }),
 
         button_buy_tickets = $('<a/>', {
-          class: 'button',
+          class: 'button buy_ticket',
           text: 'Buy tickets',
           target: '_blank'
         });
@@ -177,6 +232,10 @@
         var offset = (matchMedia('(min-width: 768px)').matches) ? 4 : 2,
             insertionPoint = index + offset - (index % offset) - 1;
         $(div).insertAfter($('.tour-date[data-index='+insertionPoint+']'));
+
+        $('#tours .buy_ticket').on('click', function(e) {
+          black_peaks.user.addCart('ticket');
+        });
       }
 
       function getDistance(lat1,lon1,lat2,lon2) {
@@ -231,5 +290,26 @@ $('document').ready(function(){
     var index = $(this).parent().index();
     black_peaks.page_setup['#song'](index);
     window.location.hash = '#song';
+  });
+
+  $('#merch .purchase-buttons .button').on('click', function(e){
+    var product = $(this).parent().parent().attr('id').substring(8);
+    if ($(this).hasClass('view-product')) {
+      black_peaks.page_setup['#product-page'](product);
+      window.location.hash = '#product-page';
+    } else {
+      black_peaks.user.addCart(product);
+    }
+  });
+
+  $('#merch .product-thumbnail').on('click', function(e){
+    var product = $(this).parent().attr('id').substring(8);
+    black_peaks.page_setup['#product-page'](product);
+    window.location.hash = '#product-page';
+  });
+
+  $('#product-page #product-add-cart').on('click', function(e) {
+    var product = $(this).attr('data-id');
+    black_peaks.user.addCart(product);
   });
 });
