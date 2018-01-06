@@ -309,7 +309,7 @@ $('document').ready(function(){
   });
 
   //When one of the mobile modal's close buttons is clicked, close the modal
-  $('.mob-modal .mob-modal-header a').on('click', function(){
+  $('.modal .modal-header a').on('click', function(){
     $(this).parent().parent().toggle();
   });
 
