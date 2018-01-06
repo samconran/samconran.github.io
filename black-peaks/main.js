@@ -91,14 +91,14 @@
 
     var page = location.hash || '#home';
 
-    if(page == '#tours')
+    if(page == '#tours' || page =='#checkout')
       black_peaks.page_setup[page]();
 
     $('.page.rendered').removeClass('rendered');
     $('.page' + page).addClass('rendered');
 
     page = (page === '#song') ? '#music' : page;
-    page = (page === '#product-page') ? '#merch' : page;
+    page = (page === '#product-page' || page === '#checkout') ? '#merch' : page;
 
     $('#navbar li, #mobile-navbar li').removeClass('selected');
     $('#navbar li, #mobile-navbar li').has('a[href="'+page+'"]').addClass('selected');
@@ -120,14 +120,46 @@
 
   //Add functions to black_peaks.page_setup for products
   black_peaks.page_setup['#product-page'] = function (i){
-    var r = black_peaks.data.merch[i];
-    black_peaks.debug('Product ID clicked: ' + i);
 
-    $('#product-page #product-image').attr('src', 'assets/img/store/' +i+ '.jpg.');
-    $('#product-page #product-title').text(r.name);
-    $('#product-page #product-price').text(r.price);
-    $('#product-page #product-add-cart').attr('data-id', i);
-    $('#product-page #product-description').text(r.description);
+    if (!black_peaks.data.merch) {
+      black_peaks.db.ref('merch').once('value').then(function(r){
+        black_peaks.data.merch = r.val();
+        renderProduct();
+      });
+    } else {
+      renderProduct();
+    }
+
+    function renderProduct() {
+      var r = black_peaks.data.merch[i];
+
+      black_peaks.debug('Product ID clicked: ' + i);
+
+      $('#product-page #product-image').attr('src', 'assets/img/store/' +i+ '.jpg.');
+      $('#product-page #product-title').text(r.name);
+      $('#product-page #product-price').text(r.price);
+      $('#product-page #product-add-cart').attr('data-id', i);
+      $('#product-page #product-description').text(r.description);
+    }
+  }
+
+  black_peaks.page_setup['#checkout'] = function() {
+    var ul = $('#checkout #cart-info ul'),
+        cart = black_peaks.user.cart,
+        total = 0;
+
+    $(ul).html('');
+
+    for (var i in cart) {
+      var li = $('<li/>', {
+        class: 'cart-product',
+        'data-product': i,
+        text: cart[i].name + '  (' +cart[i].quantity+ ')'
+      });
+      total += (cart[i].quantity * cart[i].price);
+      $(ul).append(li);
+    }
+    $('#checkout #cart-price').text(total);
   }
 
   //Add functions to black_peaks.page_setup for tours
