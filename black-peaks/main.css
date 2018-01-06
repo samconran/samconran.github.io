@@ -648,7 +648,7 @@ footer #cart {
 @media only screen and (min-width: 768px) {
 
   /*Modal*/
-  .modal {
+  .modal:not(#player) {
     width: 80%;
     height: auto;
     position: absolute;
@@ -846,7 +846,7 @@ footer #cart {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-     font-size: calc(50px + 2vw);
+    font-size: calc(50px + 2vw);
   }
 
     #player {
@@ -854,6 +854,7 @@ footer #cart {
       display: block;
       width: 12vw;
       height: 12vw;
+      grid-column: 1/2;
       position: relative;
       background-image: url('assets/img/album_cover.jpg');
       background-size: 100% auto;
