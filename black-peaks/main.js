@@ -319,6 +319,7 @@ $('document').ready(function(){
   });
 
   $('#player #playlist').on('click', function(){
+    $(this).parent().parent().parent().toggle();
     $('#playlist-modal').toggle();
   });
 
