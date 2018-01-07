@@ -26,6 +26,8 @@
     db: firebase.database(),
     //A variable set to true if there is a 'debug' cookie with a value of 'true'
     debug_mode: (document.cookie.replace(/(?:(?:^|.*;\s*)debug\s*\=\s*([^;]*).*$)|^.*$/, "$1")),
+    //
+    isMobile: !(matchMedia('(min-width: 768px)').matches),
     //A function to output to the console if the above is true
     debug : function (s, m) {
       m = m || 'log';
@@ -262,7 +264,7 @@
         $(div_buttons).append(button_view_location).append(button_buy_tickets);
         $(div).append(h1_location).append(h1_time).append(div_buttons);
 
-        var offset = (matchMedia('(min-width: 768px)').matches) ? 4 : 2,
+        var offset = black_peaks.isMobile ? 2 : 4,
             insertionPoint = index + offset - (index % offset) - 1;
         $(div).insertAfter($('.tour-date[data-index='+insertionPoint+']'));
 
@@ -319,7 +321,8 @@ $('document').ready(function(){
   });
 
   $('#player #playlist').on('click', function(){
-    $(this).parent().parent().parent().toggle();
+    if (black_peaks.isMobile)
+      $(this).parent().parent().parent().toggle();
     $('#playlist-modal').toggle();
   });
 
