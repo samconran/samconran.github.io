@@ -22,12 +22,14 @@ var player = {
   },
 
   skip : function (d) {
-    if (d == 'next')
-      player.current = (player.current == (player.playlist.length - 1)) ? 0 : player.current + 1;
-    else
-      player.current = (player.current == 0) ? (player.playlist.length - 1) : player.current - 1;
+    var song;
 
-    player.setSong(player.current)
+    if (d == 'next')
+      song = (player.current == (player.playlist.length - 1)) ? 0 : player.current + 1;
+    else
+      song = (player.current == 0) ? (player.playlist.length - 1) : player.current - 1;
+
+    player.setSong(song)
 
     player.play();
   },
@@ -43,12 +45,11 @@ var player = {
 
   init : function () {
     player.element.volume = 0.5;
-    
-    var songs = player.songs,
-        current = player.current;
+
+    var songs = player.songs;
 
     player.playlist = songs.slice();
-    player.setSong(current);
+    player.setSong(0);
 
     $('#playPauseBtn').on('click', function() {
       if ($('#playPauseBtn').hasClass('playing'))
@@ -84,10 +85,15 @@ var player = {
 
   setSong : function (song) {
     var playlist = player.playlist,
-        audio = player.element;
+        audio = player.element,
+        song_index
 
     song = (isNaN(song) ? song : playlist[song]);
+    song_index = playlist.indexOf(song);
     $(audio).attr('src', ("./audio/" + song + ".mp3"));
+    player.current = song_index;
+    $('#player #song-info h1').text(song);
+
   }
 
 }

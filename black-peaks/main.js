@@ -112,6 +112,7 @@
 
     $('#song #song-title').text(r.name);
     $('#song #song-lyrics').text(r.lyrics);
+    $('#song #song-play-btn').attr('data-song', r.name);
     $('#song #song-yt-link').attr('href', r.ytLink);
     $('#song #song-spot-link').attr('href', r.spotLink);
 
@@ -317,6 +318,15 @@ $('document').ready(function(){
     $('#mobile-navbar').toggle();
   });
 
+  $('#player #playlist').on('click', function(){
+    $('#playlist-modal').toggle();
+  });
+
+  $('#song #song-play-btn').on('click', function() {
+    var song = $('#song #song-play-btn').attr('data-song');
+    player.setSong(song);
+    player.play();
+  });
 
   $('#music #track-listing .clickable').on('click', function(e){
     var index = $(this).parent().index();
