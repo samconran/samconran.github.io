@@ -469,6 +469,7 @@ div.page .content-container {
   grid-column: 1/5;
   grid-row: 4/5;
   text-align: justify;
+  margin-top: 5%;
 }
 
 /*CHECKOUT PAGE*/
@@ -830,6 +831,7 @@ footer #cart {
   .page#product-page #product-description {
     grid-column: 2/5;
     grid-row: 3/4;
+    margin: 0;
   }
 
   /*CHECKOUT PAGE*/

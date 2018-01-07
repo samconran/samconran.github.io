@@ -138,7 +138,7 @@
 
       black_peaks.debug('Product ID clicked: ' + i);
 
-      $('#product-page #product-image').attr('src', 'assets/img/store/' +i+ '.jpg.');
+      $('#product-page #product-image').attr('src', 'assets/img/store/' +i+ '.jpg');
       $('#product-page #product-title').text(r.name);
       $('#product-page #product-price').text(r.price);
       $('#product-page #product-add-cart').attr('data-id', i);
