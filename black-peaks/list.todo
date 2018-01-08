@@ -15,8 +15,10 @@ Merch:
 ✔ Add descriptions @done(2018-01-07 21:47)
 ✔ Fix image thing @done(2018-01-07 21:47)
 
-Cart:
+Cart/Checkout:
 ☐ Clear cart button
+☐ Make pop-up!
+☐ Make sure form fields are correct
 
 Footer:
 ☐ Make links work

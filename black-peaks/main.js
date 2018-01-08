@@ -64,7 +64,8 @@
       return false;
     black_peaks.debug(data);
     black_peaks.user.cart = data.cart;
-    black_peaks.user.playlist = data.playlist;
+    if (data.playlist.length > 0)
+      black_peaks.user.playlist = data.playlist.slice();
   }
   black_peaks.user.load();
 
@@ -106,6 +107,96 @@
     $('#navbar li, #mobile-navbar li').has('a[href="'+page+'"]').addClass('selected');
   }
 
+  black_peaks.renderPlaylist = function() {
+    var in_pl = $('#playlist-modal #in-playlist ul'),
+        out_pl = $('#playlist-modal #out-playlist ul'),
+        pl = black_peaks.user.playlist,
+        songs = player.songs,
+        removed = songs.filter(s => pl.indexOf(s) == -1);
+
+    $(in_pl).html('');
+    $(out_pl).html('');
+
+    for (var i in pl) {
+      var li = createListItem(i, pl);
+      var buttons = createButtons('remove', 'up', 'down');
+      $(li).append(buttons);
+      $(in_pl).append(li);
+    }
+
+    for (var i in removed) {
+      var li = createListItem(i, removed);
+      var buttons = createButtons('add');
+      $(li).append(buttons);
+      $(out_pl).append(li);
+    }
+
+    $('#playlist-modal #playlist-controls a').on('click', function() {
+
+      var index = parseInt($(this).parent().parent().attr('data-index'));
+
+      if ($(this).hasClass('remove-song'))
+        removeSong();
+      if ($(this).hasClass('add-song'))
+        addSong();
+      if ($(this).hasClass('up-song'))
+        moveSong(-1);
+      if ($(this).hasClass('down-song'))
+        moveSong(1);
+
+      function addSong() {
+        track = songs.indexOf(removed[index]);
+        pl.splice(0, 0, songs[track]);
+      }
+
+      function removeSong() {
+        pl.splice(index, 1);
+        black_peaks.debug(index + ' removed.');
+        black_peaks.debug(player.playlist);
+      }
+
+      function moveSong(direction) {
+        var place = (index + pl.length + direction) % pl.length;
+        pl.splice(place, 0, pl.splice(index, 1)[0]);
+      }
+
+      black_peaks.renderPlaylist();
+    });
+
+    function createListItem(i, arr) {
+      var li = $('<li/>', {
+        class: 'song',
+        'data-index': i
+      });
+      var p = $('<p/>', {
+        text: arr[i]
+      });
+      $(li).append(p);
+      return li;
+    }
+
+    function createButtons(...actions) {
+      var div = $('<div/>', {
+        class: 'button-container'
+      });
+
+      for (var i in actions) {
+        div.append(createButton(actions[i]));
+      }
+
+      return div;
+
+      function createButton(action) {
+        var icon_lookup = {'add' : 'fa fa-plus', 'remove' : 'fa fa-minus', 'up' : 'fa fa-angle-up', 'down' : 'fa fa-angle-down'};
+        var icon = icon_lookup[action];
+        action += '-song';
+
+        return $('<a/>', {
+          class: icon +' '+ action +' clickable',
+        });
+      }
+    }
+  }
 
   //Add functions to black_peaks.page_setup for songs
   black_peaks.page_setup['#song'] = function (i){
@@ -321,9 +412,14 @@ $('document').ready(function(){
   });
 
   $('#player #playlist').on('click', function(){
+    black_peaks.renderPlaylist();
     if (black_peaks.isMobile)
       $(this).parent().parent().parent().toggle();
     $('#playlist-modal').toggle();
+  });
+
+  $('#playlist-modal #save-playlist-button').on('click', function(){
+    player.update();
   });
 
   $('#song #song-play-btn').on('click', function() {

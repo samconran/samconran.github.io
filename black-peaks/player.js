@@ -36,19 +36,29 @@ var player = {
 
   shuffle : function (state) {
     if (state === 'shuffle-on') {
-      player.playlist = shuffleArray(player.playlist)
+      player.playlist = shuffleArray(player.playlist);
+      player.current = player.playlist.indexOf(player.songs[player.current]);
     } else {
-      player.playlist = player.songs.slice();
+      player.playlist = black_peaks.user.playlist.slice();
       player.current = player.songs.indexOf(player.playlist[player.current]);
     }
+  },
+
+  update: function() {
+    player.playlist = black_peaks.user.playlist.slice();
+    player.setSong(0);
   },
 
   init : function () {
     player.element.volume = 0.5;
 
-    var songs = player.songs;
+    if (black_peaks.user.playlist.length > 0)
+      player.update();
+    else {
+      player.playlist = player.songs.slice();
+      black_peaks.user.playlist = player.playlist.slice();
+    }
 
-    player.playlist = songs.slice();
     player.setSong(0);
 
     $('#playPauseBtn').on('click', function() {
@@ -74,7 +84,7 @@ var player = {
       if ($(this).hasClass('shuffle-on')){
         $(this).removeClass('shuffle-on').addClass('shuffle-off');
         player.shuffle('shuffle-off');
-        black_peaks.debug('Shuffle shuffle-off!');
+        black_peaks.debug('Shuffle off!');
       } else {
         $(this).removeClass('shuffle-off').addClass('shuffle-on');
         player.shuffle('shuffle-on');
@@ -86,14 +96,13 @@ var player = {
   setSong : function (song) {
     var playlist = player.playlist,
         audio = player.element,
-        song_index
+        song_index;
 
     song = (isNaN(song) ? song : playlist[song]);
     song_index = playlist.indexOf(song);
     $(audio).attr('src', ("./audio/" + song + ".mp3"));
     player.current = song_index;
     $('#player #song-info h1').text(song);
-
   }
 
 }
