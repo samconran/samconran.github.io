@@ -33,7 +33,6 @@ Main:
 
 Cleanup:
 ☐ Consistent H tags
-☐ Flex class
-☐ grid stuff
-☐ Links work and tab correctly
-☐ Content-container
+✔ Flex class @done(2018-01-09 22:11)
+✔ Links work and tab correctly @done(2018-01-09 22:14)
+✔ Content-container @done(2018-01-09 22:13)
