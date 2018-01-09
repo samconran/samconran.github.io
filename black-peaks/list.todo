@@ -3,6 +3,7 @@ Player:
 ✔ Scroll title @done(2018-01-07 13:23)
 ✔ Make playlist button work @done(2018-01-07 13:34)
 ✔ Make playlist maker work @done(2018-01-08 18:00)
+☐ Save to local storage
 
 Tours:
 ☐ Make geolocation menu work
@@ -19,9 +20,10 @@ Cart/Checkout:
 ☐ Clear cart button
 ☐ Make pop-up!
 ☐ Make sure form fields are correct
+☐ Mobile cart
 
 Footer:
-☐ Make links work
+✔ Make links work @done(2018-01-09 14:55)
 
 Main:
 ✔ Do the page... @done(2018-01-09 14:49)

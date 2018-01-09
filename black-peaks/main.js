@@ -425,6 +425,7 @@ $('document').ready(function(){
     if (black_peaks.isMobile)
       $(this).parent().parent().parent().toggle();
     $('#playlist-modal').toggle();
+    window.scrollTo(0,0);
   });
 
   $('#playlist-modal #save-playlist-button').on('click', function(){
