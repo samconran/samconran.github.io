@@ -2,7 +2,7 @@ Player:
 ✔ Decrease volume @done(2018-01-07 13:34)
 ✔ Scroll title @done(2018-01-07 13:23)
 ✔ Make playlist button work @done(2018-01-07 13:34)
-☐ Make playlist maker work
+✔ Make playlist maker work @done(2018-01-08 18:00)
 
 Tours:
 ☐ Make geolocation menu work
@@ -24,4 +24,10 @@ Footer:
 ☐ Make links work
 
 Main:
-☐ Do the page...
+✔ Do the page... @done(2018-01-09 14:49)
+
+
+Cleanup:
+☐ Consistent H tags
+☐ grid stuff
+☐ Links work and tab correctly

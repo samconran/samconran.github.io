@@ -100,6 +100,9 @@
     $('.page.rendered').removeClass('rendered');
     $('.page' + page).addClass('rendered');
 
+    if (page =='#home')
+      black_peaks.page_setup[page]();
+
     page = (page === '#song') ? '#music' : page;
     page = (page === '#product-page' || page === '#checkout') ? '#merch' : page;
 
@@ -196,6 +199,12 @@
         });
       }
     }
+  }
+
+  black_peaks.page_setup['#home'] = function () {
+    $('.slider').bxSlider({
+      auto: true
+    });
   }
 
   //Add functions to black_peaks.page_setup for songs

@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Black Peaks</title>
     <link rel="icon" type="image/png" href="assets/img/logo_icon.png"/>
-    <link rel="stylesheet" type="text/css" href="main.css">
-    <script src="https://use.fontawesome.com/f7885d4c3b.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://use.fontawesome.com/f7885d4c3b.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
     <script src="main.js"></script>
   </head>
   <body>
@@ -45,7 +47,48 @@
       <section id="content-container">
 
         <div id="home" class="page">
-          <h1 class="title">HOME PAGE CONTENT!</h1>
+          <div class="slider-container">
+            <div class="slider">
+             <div class="slide">
+               <a href="#music">
+                 <img src="assets/img/sildes/album.png"/>
+               </a>
+             </div>
+             <div class="slide">
+               <a href="#merch">
+                 <img src="assets/img/sildes/merch.png"/>
+               </a>
+             </div>
+           </div>
+         </div>
+
+         <div id="news">
+          <h1>LATEST NEWS</h1>
+          <div class="flex-wrapper">
+            <div class="news-item">
+              <a href="https://www.facebook.com/blackpeaks/photos/a.337607599715914.1073741828.122751804534829/1220090898134242/">
+                <img src="assets/img/news/fb.jpg"/>
+                <h3>Album 2 Finished!</h3>
+                <p>We're pleased to announce that we've completed the recording for our second album.</p>
+              </a>
+            </div>
+            <div class="news-item">
+              <a href="http://www.independent.co.uk/arts-entertainment/music/features/black-peaks-statues-exclusive-album-stream-a6969086.html">
+                <img src="assets/img/news/independent.jpg"/>
+                <h3>Statues Review</h3>
+                <p>The Independent review 'STATUES'. Featuring interviews & exclusive album stream.</p>
+              </a>
+            </div>
+          </div>
+         </div>
+
+         <div id="about">
+          <div class="content-container">
+              <h1>ABOUT</h1>
+              <p>We are Black Peaks. We consist of:<br><br>Will Gardner — vocals<br>Joe Gosney — guitar<br>Andrew Gosden — Bass<br>Liam Kearley — drums<br><br>We like to blend progressive rock, metal, punk, and math-rock to create interesting music. Our debut album, <a class="clickable" href="#music">Statues</a>, was released in 2016, and we are currently working on our sophomore record ready for 2018. </p>
+              <img src="assets/img/band.jpg"/>
+          </div>
+         </div>
         </div>
 
         <!--MUSIC DIVS: (1) album overview - #music (2) song template - #song-->
@@ -393,11 +436,11 @@
 
 
       <div id="social-buttons">
-        <a class="clickable fa fa-facebook" target="_blank" aria-hidden="true"></a>
-        <a class="clickable fa fa-twitter" target="_blank" aria-hidden="true"></a>
-        <a class="clickable fa fa-youtube-square" target="_blank" href="" aria-hidden="true"></a>
-        <a class="clickable fa fa-instagram" target="_blank" aria-hidden="true"></a>
-        <a class="clickable fa fa-spotify" target="_blank" href="" aria-hidden="true"></a>
+        <a class="clickable fa fa-facebook" target="_blank" aria-hidden="true" href="https://www.facebook.com/blackpeaks/"></a>
+        <a class="clickable fa fa-twitter" target="_blank" aria-hidden="true" href="https://twitter.com/blackpeaks"></a>
+        <a class="clickable fa fa-youtube-square" target="_blank" aria-hidden="true" href="https://www.youtube.com/channel/UC7e_r-0sLQREkibnE-6WMag"></a>
+        <a class="clickable fa fa-instagram" target="_blank" aria-hidden="true" href="http://instagram.com/blackpeaks"></a>
+        <a class="clickable fa fa-spotify" target="_blank" aria-hidden="true" href="https://open.spotify.com/artist/76Se0uC5hM5u1R410UHAFp"></a>
       </div>
 
       <div id="cart">
