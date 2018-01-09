@@ -98,8 +98,8 @@
   //RenderPage function for adding/removing classes (CSS looks for these for visibiity) and firing setup functions
   black_peaks.renderPage = function() {
 
-    if (location.pathname.indexOf('/shop/') > -1)
-      return;
+    if(location.hash == "#product-page" && !($(location.hash + ' #product-title').text()))
+      location.hash = '#merch';
 
     var page = location.hash || '#home';
 

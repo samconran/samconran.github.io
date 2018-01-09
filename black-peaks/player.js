@@ -101,7 +101,7 @@ var player = {
 
     song = (isNaN(song) ? song : playlist[song]);
     song_index = playlist.indexOf(song);
-    $(audio).attr('src', ("./audio/" + song + ".mp3"));
+    $(audio).attr('src', ("./assets/audio/" + song + ".mp3"));
     player.current = song_index;
     $('#player #song-info h1').text(song);
   }
