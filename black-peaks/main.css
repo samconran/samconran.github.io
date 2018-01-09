@@ -38,8 +38,11 @@ a {
 }
 
 .flex-wrapper{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .button {
@@ -61,12 +64,16 @@ a {
 }
 
 .button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .button-container .button{
-  align-self: baseline;
+  -ms-flex-item-align: baseline;
+      align-self: baseline;
   font-size: calc(10px + .5vw);
 }
 
@@ -81,15 +88,20 @@ a {
 }
 
 .modal .modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 1.5vw;
 }
 
 .modal .modal-header * {
   margin: 0;
   font-size: 12vw;
-  align-self: center;
+  -ms-flex-item-align: center;
+      align-self: center;
 }
 
 .scrollable {
@@ -104,18 +116,37 @@ a {
   margin: 0;
   line-height: 50px;
   text-align: center;
-  animation: scroll 15s ease infinite;
+  -webkit-animation: scroll 15s ease infinite;
+          animation: scroll 15s ease infinite;
+}
+
+@-webkit-keyframes scroll {
+  0%  {
+    -webkit-transform:translateX(100%);
+            transform:translateX(100%);
+  }
+  50% {
+    -webkit-transform:translateX(0);
+            transform:translateX(0);
+  }
+  100%{
+    -webkit-transform:translateX(-400%);
+            transform:translateX(-400%);
+  }
 }
 
 @keyframes scroll {
   0%  {
-    transform:translateX(100%);
+    -webkit-transform:translateX(100%);
+            transform:translateX(100%);
   }
   50% {
-    transform:translateX(0);
+    -webkit-transform:translateX(0);
+            transform:translateX(0);
   }
   100%{
-    transform:translateX(-400%);
+    -webkit-transform:translateX(-400%);
+            transform:translateX(-400%);
   }
 }
 
@@ -164,8 +195,10 @@ div.page h1.title {
 }
 
 div.page .content-container {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(4, 25%);
+  -ms-grid-columns: (25%)[4];
+      grid-template-columns: repeat(4, 25%);
 }
 
 
@@ -175,14 +208,20 @@ div.page .content-container {
 /*MAIN NAVBAR*/
 
 #logo {
+  width: 30vm;
   width: 30vmin;
 }
 
 #navbar ul {
   list-style: none;
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   box-sizing: border-box;
   padding: 0;
 }
@@ -190,7 +229,9 @@ div.page .content-container {
 #navbar li {
   box-sizing: border-box;
   display: inline-block;
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   position: relative;
 }
 
@@ -202,11 +243,13 @@ div.page .content-container {
 #navbar li>a {
   display: block;
   text-decoration: none;
+  font-size: calc(40px + .5vm);
   font-size: calc(40px + .5vmin);
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 #navbar li.desktop {
@@ -215,6 +258,7 @@ div.page .content-container {
 }
 
 #navbar li.desktop>a {
+  font-size: calc(25px + .5vm);
   font-size: calc(25px + .5vmin);
 }
 
@@ -264,14 +308,19 @@ footer {
   width: 100%;
   height: 12vw;
   border-top: 2px solid var(--red);
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(5, 20%);
+  -ms-grid-columns: (20%)[5];
+      grid-template-columns: repeat(5, 20%);
 }
 
 footer #social-buttons {
   grid-column: 1/6;
   height: 100%;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
 }
 
 footer #social-buttons * {
@@ -287,8 +336,10 @@ footer #cart {
 
 #player .controls-container {
   margin: 2%;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 33% auto;
+  -ms-grid-columns: 33% auto;
+      grid-template-columns: 33% auto;
 }
 
 #player #album-art {
@@ -336,8 +387,10 @@ footer #cart {
 /*PLAYLIST MAKER*/
 
 #playlist-modal #playlist-controls {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 50% 50%;
+  -ms-grid-columns: 50% 50%;
+      grid-template-columns: 50% 50%;
 }
 
 #playlist-modal #playlist-controls div {
@@ -345,8 +398,12 @@ footer #cart {
 }
 
 #playlist-modal #playlist-controls li {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 #playlist-modal #playlist-controls li * {
@@ -362,7 +419,10 @@ footer #cart {
 }
 
 #playlist-modal #playlist-controls li .button-container {
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
   width: 20%;
 }
 
@@ -420,10 +480,12 @@ footer #cart {
   position: relative;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .page#music #album-title {
+  font-size: 8vm;
   font-size: 8vmin;
   display: inline-block;
   grid-column: 2/5;
@@ -440,20 +502,27 @@ footer #cart {
 .page#music #purchase-buttons {
   grid-column: 1/5;
   grid-row: 3/4;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin: 2vh 0 0;
 }
 
 .page#music #purchase-buttons .button {
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 
 /*SONG PAGE*/
 
 .page#song #music-back-btn, #song-title {
-  align-self: center;
+  -ms-flex-item-align: center;
+      align-self: center;
   margin: 0;
   grid-row: 1/2;
 }
@@ -488,8 +557,12 @@ footer #cart {
 }
 
 .page#song #link-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: 15px 0;
 }
 
@@ -509,7 +582,8 @@ footer #cart {
 /*TOURS PAGE*/
 
 .page#tours .content-container {
-  grid-template-columns: 50% 50%;
+  -ms-grid-columns: 50% 50%;
+      grid-template-columns: 50% 50%;
 }
 
 .page#tours .tour-date {
@@ -548,8 +622,10 @@ footer #cart {
   box-sizing: border-box;
   padding: 3.5vw;
   grid-column: 1/3;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 50% 50%
+  -ms-grid-columns: 50% 50%;
+      grid-template-columns: 50% 50%
 }
 
 .page#tours .tour-date-location, .tour-date-time {
@@ -571,7 +647,8 @@ footer #cart {
 /*MERCH STORE PAGE*/
 
 .page#merch .content-container {
-  grid-template-columns: 50% 50%;
+  -ms-grid-columns: 50% 50%;
+      grid-template-columns: 50% 50%;
 }
 
 .page#merch .product {
@@ -590,7 +667,8 @@ footer #cart {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .page#merch .purchase-buttons .button {
@@ -618,7 +696,8 @@ footer #cart {
   position: relative;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .page#product-page #product-title {
@@ -646,7 +725,8 @@ footer #cart {
   position: relative;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .page#product-page #product-description {
@@ -724,7 +804,8 @@ footer #cart {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     border: 2px solid var(--grey);
   }
 
@@ -768,7 +849,8 @@ footer #cart {
       position: relative;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
       font-size: calc(50px + 2vw);
     }
 
@@ -799,7 +881,8 @@ footer #cart {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
         background: #0000007a;
       }
 
@@ -860,7 +943,8 @@ footer #cart {
   }
 
   .page#music #album-title {
-    grid-column-start: 3;
+    -ms-grid-column: 3;
+        grid-column-start: 3;
     margin: 0;
   }
 
@@ -870,11 +954,14 @@ footer #cart {
   }
 
   .page#music #purchase-buttons {
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
   }
 
   .page#music #purchase-buttons .button {
-    flex-grow: 0;
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
     width: 5vw;
   }
 
@@ -886,7 +973,8 @@ footer #cart {
   }
 
   .page#song #link-buttons {
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
   }
 
   .page#song #lyrics-container {
@@ -906,7 +994,8 @@ footer #cart {
   /*TOURS PAGE*/
 
   .page#tours .content-container {
-    grid-template-columns: repeat(4, 25%);
+    -ms-grid-columns: (25%)[4];
+        grid-template-columns: repeat(4, 25%);
   }
 
   .page#tours .tour-date-info {
@@ -916,22 +1005,26 @@ footer #cart {
   .page#tours .tour-date-info .button-container {
     margin: 0;
     grid-column: 2/3;
-    grid-row: 1;
+    -ms-grid-row: 1;
+        grid-row: 1;
   }
 
   .page#tours .tour-date-location {
     grid-column: 1/2;
-    grid-row: 1;
+    -ms-grid-row: 1;
+        grid-row: 1;
   }
 
   /*MERCH STORE PAGE*/
   .page#merch .content-container {
-    grid-template-columns: repeat(4, 25%);
+    -ms-grid-columns: (25%)[4];
+        grid-template-columns: repeat(4, 25%);
   }
 
   .page#merch .purchase-buttons {
     display: block;
     opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   }
 
   .page#merch .button {
@@ -941,10 +1034,13 @@ footer #cart {
 
   .page#merch .product:hover .purchase-buttons {
     opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   }
 
   .page#merch .product:hover .product-thumbnail {
-    filter: brightness(50%);
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.5" /><feFuncG type="linear" slope="0.5" /><feFuncB type="linear" slope="0.5" /></feComponentTransfer></filter></svg>#filter');
+    -webkit-filter: brightness(50%);
+            filter: brightness(50%);
   }
 
   /*PRODUCT PAGES*/
@@ -970,7 +1066,8 @@ footer #cart {
   .page#product-page #product-add-cart {
     width: calc(100px + 2.8vw);
     top: 0%;
-    transform: translate(-50%, 20%);
+    -webkit-transform: translate(-50%, 20%);
+            transform: translate(-50%, 20%);
     font-size: 1.4vw;
   }
 
