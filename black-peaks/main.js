@@ -41,14 +41,6 @@
     black_peaks.data = r.val();
   });
 
-  //Ask for the user's location and store in black_peaks's user data
-  navigator.geolocation.getCurrentPosition(function(l){
-    black_peaks.user.location = {
-      lat: l.coords.latitude,
-      lon: l.coords.longitude
-    };
-  });
-
 
   black_peaks.user.save = function() {
     var data = {
@@ -266,15 +258,48 @@
   }
 
   //Add functions to black_peaks.page_setup for tours
-  black_peaks.page_setup['#tours'] = function (){
-    var r = black_peaks.data.tours;
+  black_peaks.page_setup['#tours'] = function (distance){
+    var tour_dates = black_peaks.data.tours;
 
-    if (r)
-      renderTours(r);
+    if (tour_dates)
+      filterTours(tour_dates, distance);
     else
       black_peaks.db.ref('tours').once('value').then(function(r){
-        renderTours(r.val());
+        tour_dates = r.val();
+        filterTours(tour_dates, distance);
       });
+
+    function filterTours(tour_dates, distance) {
+      if(!distance){
+        renderTours(tour_dates);
+        return;
+      }
+      var filtered_dates = [];
+      //Ask for the user's location and store in black_peaks's user data
+      navigator.geolocation.getCurrentPosition(function(l){
+        black_peaks.user.location = {
+          lat: l.coords.latitude,
+          lon: l.coords.longitude
+        };
+        filtered_dates = tour_dates.filter(function(d){
+          return getDistance(d.location.lat, d.location.lon, black_peaks.user.location.lat, black_peaks.user.location.lon) <= distance;
+        });
+        renderTours(filtered_dates);
+      });
+      function getDistance(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c; // Distance in km
+        return d;
+
+        function deg2rad(deg) {
+          return deg * (Math.PI/180)
+        }
+      }
+    }
 
     function renderTours(r) {
       var page_content = $('#tours .content-container');
@@ -366,25 +391,13 @@
 
         var offset = black_peaks.isMobile ? 2 : 4,
             insertionPoint = index + offset - (index % offset) - 1;
+        if (!($('.tour-date[data-index='+insertionPoint+']').length))
+          insertionPoint = index;
         $(div).insertAfter($('.tour-date[data-index='+insertionPoint+']'));
 
         $('#tours .buy_ticket').on('click', function(e) {
           black_peaks.user.addCart('ticket');
         });
-      }
-
-      function getDistance(lat1,lon1,lat2,lon2) {
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2-lat1);  // deg2rad below
-        var dLon = deg2rad(lon2-lon1);
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = R * c; // Distance in km
-        return d;
-
-        function deg2rad(deg) {
-          return deg * (Math.PI/180)
-        }
       }
     }
   }
@@ -442,6 +455,11 @@ $('document').ready(function(){
     var index = $(this).parent().index();
     black_peaks.page_setup['#song'](index);
     window.location.hash = '#song';
+  });
+
+  $('.page#tours #tours-menu .button').on('click', function(){
+    var distance = $(this).attr('data-distance');
+    black_peaks.page_setup['#tours'](distance);
   });
 
   $('#merch .purchase-buttons .button').on('click', function(e){

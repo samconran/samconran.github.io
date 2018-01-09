@@ -106,7 +106,6 @@ form input, form select {
 
 
 
-
 /*MAIN NAVBAR*/
 
 #logo {
@@ -422,6 +421,10 @@ div.page .content-container {
   margin-top: 2vw;
   grid-column-start: 1;
   grid-column-end: 3;
+}
+
+.page#tours #tours-menu {
+  margin-top: 2vw;
 }
 
 /*MERCH STORE PAGE*/

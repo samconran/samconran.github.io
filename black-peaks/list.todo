@@ -4,9 +4,10 @@ Player:
 ✔ Make playlist button work @done(2018-01-07 13:34)
 ✔ Make playlist maker work @done(2018-01-08 18:00)
 ☐ Save to local storage
+☐ Make buttons fit mobile on maker
 
 Tours:
-☐ Make geolocation menu work
+✔ Make geolocation menu work @done(2018-01-09 17:08)
 
 Songs:
 ✔ Make song play buttons work @done(2018-01-07 13:45)

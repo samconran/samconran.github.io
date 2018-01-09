@@ -47,6 +47,7 @@ var player = {
   update: function() {
     player.playlist = black_peaks.user.playlist.slice();
     player.setSong(0);
+    black_peaks.user.save();
   },
 
   init : function () {
