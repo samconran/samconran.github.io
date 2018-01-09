@@ -41,7 +41,7 @@
     black_peaks.data = r.val();
   });
 
-
+  //Save function. Stringifys cart and playlist data from user object and stores in localStorage
   black_peaks.user.save = function() {
     var data = {
       cart: black_peaks.user.cart,
@@ -50,20 +50,27 @@
     localStorage.setItem('black-peaks_user-data', JSON.stringify(data));
   }
 
+  //Load function. Parses cart and playlist data from localStorage, puts into user object
   black_peaks.user.load = function() {
     var data = JSON.parse(localStorage.getItem('black-peaks_user-data'));
     if (!data)
       return false;
     black_peaks.debug(data);
     black_peaks.user.cart = data.cart;
+    //If user has a custom playlist, load that
     if (data.playlist.length > 0)
       black_peaks.user.playlist = data.playlist.slice();
   }
+
+  //Load data ASAP
   black_peaks.user.load();
 
+  //Add to cart function to add items to user object's cart
   black_peaks.user.addCart = function(p) {
     var cart = black_peaks.user.cart,
         db = black_peaks.data.merch[p];
+
+    //If the item is already there, increase the quantity. Otherwise, add it
     if (cart[p]) {
       cart[p].quantity++;
     } else {
@@ -74,8 +81,18 @@
       }
     }
     black_peaks.debug(cart);
+    //Display toast message and save the cart to local storage
+    black_peaks.toast('Added to cart!');
     black_peaks.user.save();
     black_peaks.debug('saved!');
+  }
+
+  //Function to clear the user's cart. Sets the cart to a blank array, displays toast, and saves
+  black_peaks.user.clearCart = function() {
+    black_peaks.user.cart = [];
+    black_peaks.user.save();
+    black_peaks.debug(cart);
+    black_peaks.toast('Cart Cleared!');
   }
 
   //RenderPage function for adding/removing classes (CSS looks for these for visibiity) and firing setup functions
@@ -102,6 +119,7 @@
     $('#navbar li, #mobile-navbar li').has('a[href="'+page+'"]').addClass('selected');
   }
 
+  //Function for rendering the playlist customiser
   black_peaks.renderPlaylist = function() {
     var in_pl = $('#playlist-modal #in-playlist ul'),
         out_pl = $('#playlist-modal #out-playlist ul'),
@@ -402,6 +420,20 @@
     }
   }
 
+  //Function to create toast (mini pop-up) with custom message
+  black_peaks.toast = function(message) {
+    var toast = $('<div/>', {
+      class: 'toast',
+      text: message
+    });
+    var settings = {
+      height:"toggle",
+      opacity:"toggle"
+    };
+    $(toast).appendTo('body').hide().animate(settings, 500).delay(3000).animate(settings, 500, function(){
+      $(this.remove());
+    });
+  }
 })();
 
 
@@ -443,6 +475,7 @@ $('document').ready(function(){
 
   $('#playlist-modal #save-playlist-button').on('click', function(){
     player.update();
+    black_peaks.toast('Playlist saved!');
   });
 
   $('#song #song-play-btn').on('click', function() {
@@ -457,7 +490,7 @@ $('document').ready(function(){
     window.location.hash = '#song';
   });
 
-  $('.page#tours #tours-menu .button').on('click', function(){
+  $('#tours #tours-menu .button').on('click', function(){
     var distance = $(this).attr('data-distance');
     black_peaks.page_setup['#tours'](distance);
   });
@@ -481,5 +514,10 @@ $('document').ready(function(){
   $('#product-page #product-add-cart').on('click', function(e) {
     var product = $(this).attr('data-id');
     black_peaks.user.addCart(product);
+  });
+
+  $('#checkout #clear-cart').on('click', function() {
+    black_peaks.user.clearCart();
+    black_peaks.renderPage();
   });
 });
