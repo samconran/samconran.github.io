@@ -288,6 +288,7 @@
       });
 
     function filterTours(tour_dates, distance) {
+      //If no distance given (or distance is 0), render all tours
       if(!distance){
         renderTours(tour_dates);
         return;
@@ -299,6 +300,7 @@
           lat: l.coords.latitude,
           lon: l.coords.longitude
         };
+        //Filter the tour array, returning only elements within distance range
         filtered_dates = tour_dates.filter(function(d){
           return getDistance(d.location.lat, d.location.lon, black_peaks.user.location.lat, black_peaks.user.location.lon) <= distance;
         });
