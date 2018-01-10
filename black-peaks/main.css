@@ -189,7 +189,7 @@ div.page h1.title {
 div.page .content-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (25%)[4];
+  -ms-grid-columns: 25% 25% 25% 25%;
       grid-template-columns: repeat(4, 25%);
 }
 
@@ -200,7 +200,6 @@ div.page .content-container {
 /*MAIN NAVBAR*/
 
 #logo {
-  width: 30vm;
   width: 30vmin;
 }
 
@@ -235,7 +234,6 @@ div.page .content-container {
 #navbar li>a {
   display: block;
   text-decoration: none;
-  font-size: calc(40px + .5vm);
   font-size: calc(40px + .5vmin);
   position: absolute;
   top: 50%;
@@ -250,7 +248,6 @@ div.page .content-container {
 }
 
 #navbar li.desktop>a {
-  font-size: calc(25px + .5vm);
   font-size: calc(25px + .5vmin);
 }
 
@@ -302,7 +299,7 @@ footer {
   border-top: 2px solid #BA3B42;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (20%)[5];
+  -ms-grid-columns: 20% 20% 20% 20% 20%;
       grid-template-columns: repeat(5, 20%);
 }
 
@@ -477,7 +474,6 @@ footer #cart {
 }
 
 .page#music #album-title {
-  font-size: 8vm;
   font-size: 8vmin;
   display: inline-block;
   grid-column: 2/5;
@@ -875,7 +871,7 @@ footer #cart {
         left: 50%;
         -webkit-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
-        background: #0000007a;
+        background: rgba(0, 0, 0, 0.48);
       }
 
       #player #controls-lv1, #controls-lv2 {
@@ -986,7 +982,7 @@ footer #cart {
   /*TOURS PAGE*/
 
   .page#tours .content-container {
-    -ms-grid-columns: (25%)[4];
+    -ms-grid-columns: 25% 25% 25% 25%;
         grid-template-columns: repeat(4, 25%);
   }
 
@@ -1009,7 +1005,7 @@ footer #cart {
 
   /*MERCH STORE PAGE*/
   .page#merch .content-container {
-    -ms-grid-columns: (25%)[4];
+    -ms-grid-columns: 25% 25% 25% 25%;
         grid-template-columns: repeat(4, 25%);
   }
 
