@@ -98,20 +98,25 @@
   //RenderPage function for adding/removing classes (CSS looks for these for visibiity) and firing setup functions
   black_peaks.renderPage = function() {
 
+    //If a product page is being rendered, but no info has loaded in, point to the merch page
     if(location.hash == "#product-page" && !($(location.hash + ' #product-title').text()))
       location.hash = '#merch';
 
+    //If no hash, go to the home page
     var page = location.hash || '#home';
 
+    //Before loading tours or checkout page, set them up
     if(page == '#tours' || page =='#checkout')
       black_peaks.page_setup[page]();
 
     $('.page.rendered').removeClass('rendered');
     $('.page' + page).addClass('rendered');
 
+    //Setup the home page once it has been rendered
     if (page =='#home')
       black_peaks.page_setup[page]();
 
+    //Show 'music' as selected in the navbar for the song page, and 'merch' for the product and checkout pages
     page = (page === '#song') ? '#music' : page;
     page = (page === '#product-page' || page === '#checkout') ? '#merch' : page;
 
@@ -127,9 +132,11 @@
         songs = player.songs,
         removed = songs.filter(s => pl.indexOf(s) == -1);
 
+    //Clear the modal
     $(in_pl).html('');
     $(out_pl).html('');
 
+    //For each item in the playlist, create a listing with remove/move buttons
     for (var i in pl) {
       var li = createListItem(i, pl);
       var buttons = createButtons('remove', 'up', 'down');
@@ -137,6 +144,7 @@
       $(in_pl).append(li);
     }
 
+    //For each song not in the playlist, create an 'out of playlist' listing with add button
     for (var i in removed) {
       var li = createListItem(i, removed);
       var buttons = createButtons('add');
@@ -144,10 +152,11 @@
       $(out_pl).append(li);
     }
 
+    //When one of the listing's buttons is cicked...
     $('#playlist-modal #playlist-controls a').on('click', function() {
-
       var index = parseInt($(this).parent().parent().attr('data-index'));
 
+      //Run the relevant function
       if ($(this).hasClass('remove-song'))
         removeSong();
       if ($(this).hasClass('add-song'))
@@ -173,9 +182,11 @@
         pl.splice(place, 0, pl.splice(index, 1)[0]);
       }
 
+      //Re-render the playlist
       black_peaks.renderPlaylist();
     });
 
+    //Function to create a li item using jQuery
     function createListItem(i, arr) {
       var li = $('<li/>', {
         class: 'song',
@@ -188,6 +199,7 @@
       return li;
     }
 
+    //Create a button container with the action buttons
     function createButtons(...actions) {
       var div = $('<div/>', {
         class: 'button-container'
@@ -199,6 +211,7 @@
 
       return div;
 
+      //Create individual button
       function createButton(action) {
         var icon_lookup = {'add' : 'fa fa-plus', 'remove' : 'fa fa-minus', 'up' : 'fa fa-angle-up', 'down' : 'fa fa-angle-down'};
         var icon = icon_lookup[action];
@@ -211,6 +224,7 @@
     }
   }
 
+  //setup bxslider for the home page
   black_peaks.page_setup['#home'] = function () {
     $('.slider').bxSlider({
       auto: true
@@ -222,18 +236,21 @@
     var r = black_peaks.data.songs[i];
     black_peaks.debug('ol list item clicked: ' + i);
 
+    //Set the song information fields to the relevant song
     $('#song #song-title').text(r.name);
     $('#song #song-lyrics').text(r.lyrics);
     $('#song #song-play-btn').attr('data-song', r.name);
     $('#song #song-yt-link').attr('href', r.ytLink);
     $('#song #song-spot-link').attr('href', r.spotLink);
 
+    //Replace '\n' characters with <br> tags
     $('#song #song-lyrics').html($('#song #song-lyrics').text().replace(/\\n/g, '<br/>'));
   }
 
   //Add functions to black_peaks.page_setup for products
   black_peaks.page_setup['#product-page'] = function (i){
 
+    //If the merch hasn't been loaded yet, load it and then continue rendering.
     if (!black_peaks.data.merch) {
       black_peaks.db.ref('merch').once('value').then(function(r){
         black_peaks.data.merch = r.val();
@@ -243,11 +260,13 @@
       renderProduct();
     }
 
+    //Function to render the product
     function renderProduct() {
       var r = black_peaks.data.merch[i];
 
       black_peaks.debug('Product ID clicked: ' + i);
 
+      //Fill in the product information with the relevant product
       $('#product-page #product-image').attr('src', 'assets/img/store/' +i+ '.jpg');
       $('#product-page #product-title').text(r.name);
       $('#product-page #product-price').text(r.price);
@@ -261,17 +280,21 @@
         cart = black_peaks.user.cart,
         total = 0;
 
+    //Clear the cart list
     $(ul).html('');
 
+    //For each item in the cart, create a listing in the cart ul
     for (var i in cart) {
       var li = $('<li/>', {
         class: 'cart-product',
         'data-product': i,
         text: cart[i].name + '  (' +cart[i].quantity+ ')'
       });
-      total += (cart[i].quantity * cart[i].price);
+      total += (cart[i].quantity * cart[i].price); //Count up a total cost
       $(ul).append(li);
     }
+
+    //Set the proce to the total
     $('#checkout #cart-price').text(total);
   }
 
@@ -279,6 +302,7 @@
   black_peaks.page_setup['#tours'] = function (distance){
     var tour_dates = black_peaks.data.tours;
 
+    //If tour dates, continue. If none laoded from database yet, load them and then continue
     if (tour_dates)
       filterTours(tour_dates, distance);
     else
@@ -306,6 +330,7 @@
         });
         renderTours(filtered_dates);
       });
+      //Function for working out the distance from lattitudes/longitudes
       function getDistance(lat1,lon1,lat2,lon2) {
         var R = 6371; // Radius of the earth in km
         var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -321,10 +346,12 @@
       }
     }
 
+    //Function for rendering tour listings
     function renderTours(r) {
       var page_content = $('#tours .content-container');
       $(page_content).html('');
 
+      //For each tour in the array, create the necessary HTML elements and append to the page
       for (var i in r) {
 
         var gig = r[i],
@@ -357,6 +384,7 @@
 
       }
 
+      //Function for rendering the information div once a tour has been clicked
       function renderInfo(e) {
 
         var clicked = e.currentTarget,
@@ -375,6 +403,7 @@
         black_peaks.debug('Tour clicked (index): ' + index);
         $(clicked).addClass('selected');
 
+        //Create the HTML using jQuery
         var div = $('<div/>', {
           class: 'tour-date-info'
         }),
@@ -409,6 +438,7 @@
         $(div_buttons).append(button_view_location).append(button_buy_tickets);
         $(div).append(h1_location).append(h1_time).append(div_buttons);
 
+        //Insert after the end of the tour date's row. If no full row, just after the tour date.
         var offset = black_peaks.isMobile ? 2 : 4,
             insertionPoint = index + offset - (index % offset) - 1;
         if (!($('.tour-date[data-index='+insertionPoint+']').length))
@@ -438,19 +468,11 @@
   }
 })();
 
-
-
-
-
-
-
-
-
-
-
+//On document.ready...
 $('document').ready(function(){
+  //Set the render page function to fire on every hashchange event
   window.onhashchange = black_peaks.renderPage;
-  black_peaks.renderPage();
+  black_peaks.renderPage(); //Initial render page call
 
   //General function for opening the mobile-nav or mobile-player screens
   $('#navbar .mobile a').on('click', function(){
@@ -467,6 +489,7 @@ $('document').ready(function(){
     $('#mobile-navbar').toggle();
   });
 
+  //When the playlist button is clicked, show it and scroll to it. If on mobile, close the player modal.
   $('#player #playlist').on('click', function(){
     black_peaks.renderPlaylist();
     if (black_peaks.isMobile)
@@ -475,28 +498,33 @@ $('document').ready(function(){
     window.scrollTo(0,0);
   });
 
+  //On clicking the save playlist button, save it and show the toast.
   $('#playlist-modal #save-playlist-button').on('click', function(){
     player.update();
     black_peaks.toast('Playlist saved!');
   });
 
+  //When a play button is clicked, play the song
   $('#song #song-play-btn').on('click', function() {
     var song = $('#song #song-play-btn').attr('data-song');
     player.setSong(song);
     player.play();
   });
 
+  //When a song is clicked, setup the song page to show its details, and then load it
   $('#music #track-listing .clickable').on('click', function(e){
     var index = $(this).parent().index();
     black_peaks.page_setup['#song'](index);
     window.location.hash = '#song';
   });
 
+  //When a distance filter is clicked, re-setup the page, filtering by the distance
   $('#tours #tours-menu .button').on('click', function(){
     var distance = $(this).attr('data-distance');
     black_peaks.page_setup['#tours'](distance);
   });
 
+  //Setup add to cart and view buttons on the merch page
   $('#merch .purchase-buttons .button').on('click', function(e){
     var product = $(this).parent().parent().attr('id').substring(8);
     if ($(this).hasClass('view-product')) {
@@ -507,17 +535,20 @@ $('document').ready(function(){
     }
   });
 
+  //When a merch item is clicked, setup the product page and load it
   $('#merch .product-thumbnail').on('click', function(e){
     var product = $(this).parent().attr('id').substring(8);
     black_peaks.page_setup['#product-page'](product);
     window.location.hash = '#product-page';
   });
 
+  //Set up adding to cart event on the button click
   $('#product-page #product-add-cart').on('click', function(e) {
     var product = $(this).attr('data-id');
     black_peaks.user.addCart(product);
   });
 
+  //Clear the cart and re-render the page on 'clear cart' click
   $('#checkout #clear-cart').on('click', function() {
     black_peaks.user.clearCart();
     black_peaks.renderPage();

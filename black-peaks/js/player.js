@@ -7,6 +7,8 @@ var player = {
   playlist : [],
 
   //Methods
+
+  //Add the playing class to the play/pause button and play the audio
   play : function () {
     $('#playPauseBtn').addClass('playing').removeClass('fa-play').addClass('fa-pause');
     var audio = player.element;
@@ -14,13 +16,14 @@ var player = {
     black_peaks.debug($(audio).attr('src') + '\nCurrent: ' + player.current);
   },
 
+  //Remove the playing class from the play/pause button and pause the audio
   pause : function () {
     $('#playPauseBtn').removeClass('playing').removeClass('fa-pause').addClass('fa-play');
-
     var audio = player.element;
     audio.pause();
   },
 
+  //Set the song to the next song if d== next. If not (d=='previous'), skip to the previous song
   skip : function (d) {
     var song;
 
@@ -30,10 +33,10 @@ var player = {
       song = (player.current == 0) ? (player.playlist.length - 1) : player.current - 1;
 
     player.setSong(song)
-
     player.play();
   },
 
+  //If the state is to shuffle-on, replace the playlist with a shuffled version. If shuffle-off, replace with the in-order version from the user object
   shuffle : function (state) {
     if (state === 'shuffle-on') {
       player.playlist = shuffleArray(player.playlist);
@@ -44,15 +47,18 @@ var player = {
     }
   },
 
+  //Set the playlist to that of the user object, then perform a localStorage save function
   update: function() {
     player.playlist = black_peaks.user.playlist.slice();
     player.setSong(0);
     black_peaks.user.save();
   },
 
+  //Initialisation function. Sets the volume, as well as setting the playlist.
   init : function () {
     player.element.volume = 0.5;
 
+    //If a user-defined playlist loaded in, set playlist to that. Otherwise, all songs.
     if (black_peaks.user.playlist.length > 0)
       player.update();
     else {
@@ -62,6 +68,7 @@ var player = {
 
     player.setSong(0);
 
+    //Set up player click events for all player controls.
     $('#playPauseBtn').on('click', function() {
       if ($('#playPauseBtn').hasClass('playing'))
         player.pause();
@@ -94,6 +101,7 @@ var player = {
     });
   },
 
+  //Function for setting the current song
   setSong : function (song) {
     var playlist = player.playlist,
         audio = player.element,
@@ -108,6 +116,7 @@ var player = {
 
 }
 
+//Function for shuffling an array
 function shuffleArray (array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -118,4 +127,5 @@ function shuffleArray (array) {
     return array;
 }
 
+//On document.ready, run the initialisation function
 $(document).ready(player.init);
