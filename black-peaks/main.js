@@ -89,7 +89,7 @@
 
   //Function to clear the user's cart. Sets the cart to a blank array, displays toast, and saves
   black_peaks.user.clearCart = function() {
-    black_peaks.user.cart = [];
+    black_peaks.user.cart = {};
     black_peaks.user.save();
     black_peaks.debug(cart);
     black_peaks.toast('Cart Cleared!');
