@@ -19,6 +19,10 @@ a {
   color: #BA3B42;
 }
 
+.center {
+  text-align: center;
+}
+
 .clickable:hover, .clickable:hover * {
   color: #BA3B42;
   cursor: pointer;
