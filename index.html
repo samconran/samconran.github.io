@@ -1,47 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Spinnaker"/>
-  <link rel="stylesheet" type="text/css" href="./Hub/hub.css"></link>
-  <script src="https://unpkg.com/vue"></script>
-</head>
-<body>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sam Conran</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/hub/hub.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="/hub/hub.js" charset="utf-8"></script>
+  </head>
+  <body>
 
-  <!--Navigation Bar-->
-  <div id="nav">
-    <ul>
-      <li>&#9776;</li>
-      <li class="menu-item">Projects</li>
-      <li class="menu-item">About Me</li>
-      <li class="menu-item">Contact</li>
-    </ul>
-  </div>
+  <nav id="sidebar">
+    <div class="sidebar-link">
+      <i class="material-icons">home</i>
+    </div>
+  </nav>
 
-  <!--Main Content-->
-  <div id="main-content">
-    <h1 class="title">Projects</h1>
+  <section id="main" class="centre">
+    <div id="home" class="page">
+      <h1 class="">Sam Conran</h1>
+      <p>This homepage is currently under construction. It looks bad and nothing works, except these links to my other stuff:</p>
+      <a href="/tv-s">TV Scheduler</a>
+      <br>
+      <a href="/black-peaks">Black Peaks (uni project)</a>
+    </div>
+  </section>
 
-    <p>Here you can find a list of the projects that I host here on GitHub Pages. They're all their own, individual projects, but I host them all here as subdomains to make my life a bit easier. Please note that the links below work, but the rest of this homepage is not currently functional. I'm working on it!</p>
-
-    <table id="project-table">
-      <tr>
-        <td v-for="p in projects">
-          <a v-bind:href="p.link">
-            <div>
-              <h3>{{p.name}}</h3>
-              <p>{{p.description}}</p>
-            </div>
-          </a>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
-<script type="text/javascript" src="./Hub/hub.js"></script>
-</body>
+  </body>
 </html>
