@@ -95,7 +95,7 @@ window.inline = {
       renderContent('modules', data, 'module-container')
     });
     function truncate(s) {
-      return (s.toLowerCase().replace(" ", "-"));
+      return (s.toLowerCase().replace(/\s+/g, '-'));
     }
   }
 }
