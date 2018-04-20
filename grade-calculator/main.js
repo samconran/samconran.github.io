@@ -1,7 +1,7 @@
 $(document).ready(function(){
   if($(this).width() > 991)
     $('#title').addClass('display-4')
-  $('body').prop('hidden', false)
+  $('body').prop('hidden', false);
   loadData();
   renderContent('modules', data, 'module-container');
 });
