@@ -7,11 +7,14 @@ $(document).ready(function(){
 });
 
 function saveData() {
-  localStorage.setItem('modules', JSON.stringify(data));
+  var data = {
+    modules: window.data.modules
+  }
+  localStorage.setItem('gradesData', JSON.stringify(data));
 }
 
 function loadData() {
-  var data = localStorage.getItem('modules');
+  var data = localStorage.getItem('gradesData');
   window.data = data ? JSON.parse(data) : {
     modules : {}
   }
@@ -33,15 +36,21 @@ function getResults() {
   }
   return results;
 
-  function getCurrent(module) {
-    var c = data.modules[module].current;
-    return c.score/100 * c.worth;
+  function getCurrent(moduleName) {
+    var total = 0,
+        current = window.data.modules[moduleName].current;
+    for (var i in current)
+      total += current[i].score/100 * current[i].worth
+    return total;
   }
 
-  function calculateResults(module, needed) {
-    var c = data.modules[module].current,
-        current = getCurrent(module),
-        result = Math.ceil((needed - current) / (100-c.worth) * 100);
+  function calculateResults(moduleName, needed) {
+    var currentMarks = window.data.modules[moduleName].current,
+        currentScore = getCurrent(moduleName),
+        currentWorth = 0;
+    for (var i in currentMarks)
+      currentWorth += parseInt(currentMarks[i].worth);
+    var result = Math.ceil((needed - currentScore) / (100-currentWorth) * 100);
 
     return (result > 0) ? ((result <= 100) ? result : '\u2715') : '\u2713';
 
@@ -67,7 +76,7 @@ function renderContent (target, data, destination) {
 window.inline = {
   modules : function() {
     $('.addModuleBtn').on('click', function(){
-      renderContent('add-module', {}, 'addModuleForm');
+      renderContent('add-module', data.tempMarks, 'addModuleForm');
       $('#addModule').modal('show');
     });
     $('.deleteModule').on('click', function() {
@@ -82,23 +91,53 @@ window.inline = {
   },
 
   'add-module' : function(){
+
+    $('#addModule-tab').on('click', function(e) {
+      e.preventDefault();
+      saveModuleData();
+      renderContent('add-module', data.tempModule, 'addModuleForm');
+      $('#'+(data.tempModule.current.length-1)+'-tab').tab('show');
+    });
+
     $('#save-module').on('click', function(){
-      data.modules[$('#moduleTitle').val()] = {
-        id : truncate($('#moduleTitle').val()),
-        current : {
-          score: $('#currentMarks').val(),
-          worth: $('#currentWorth').val()
-        }
-      }
+      saveModuleData(true);
       saveData();
       $('#addModule').modal('hide');
-      renderContent('modules', data, 'module-container')
+      renderContent('modules', data, 'module-container');
+      window.data.tempModule = {};
     });
-    function truncate(s) {
-      return (s.toLowerCase().replace(/\s+/g, '-'));
+
+    function saveModuleData(isFinal) {
+      var marks = [],
+          moduleName = $('#moduleTitle').val();
+      $('.mark-tab').each(function(i,v){
+        marks.push({
+          name: $('#'+i+'-currentName').val(),
+          score: $('#'+i+'-currentMarks').val(),
+          worth: $('#'+i+'-currentWorth').val()
+        });
+      });
+      if (!isFinal) {
+        marks.push({name: null, score: null, worth: null});
+        window.data.tempModule = new Module(moduleName, marks)
+      } else
+        data.modules[moduleName] = new Module(moduleName, marks)
     }
   }
 }
+
+function Module (name, marks) {
+  this.name = name;
+  this.id = truncate(name);
+  this.current = marks || [];
+  function truncate(s) {
+    return (s.toLowerCase().replace(/\s+/g, '-'));
+  }
+}
+
+Handlebars.registerHelper("incr", function(value, options) {
+    return parseInt(value) + 1;
+});
 
 Handlebars.registerHelper('ifPassed', function(data, options) {
   if(data == '\u2713') {

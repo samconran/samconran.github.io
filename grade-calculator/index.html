@@ -58,14 +58,19 @@
               <h5>Current Marks</h5>
               <table class="table table-hover">
                 <tbody>
-                  <tr>
-                    <th scope="row">Score</th>
-                    <td>{{current.score}}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Module Worth</th>
-                    <td>{{current.worth}}</td>
-                  </tr>
+                    {{#each current}}
+                    <tr>
+                      <th class="text-center" colspan="2">{{name}}</th>
+                    </tr>
+                    <tr>
+                      <th scope="row">Score</th>
+                      <td>{{score}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Module Worth</th>
+                      <td>{{worth}}</td>
+                    </tr>
+                  {{/each}}
                 </tbody>
               </table>
               <div class="mt-2">
@@ -88,23 +93,52 @@
     <script id="add-module" type="text/x-handlebars-template">
       <div class="form-group">
         <label for="moduleTitle">Module Title</label>
-        <input type="text" class="form-control" id="moduleTitle" placeholder="Enter Module Title" value="">
+        <input type="text" class="form-control" id="moduleTitle" placeholder="Enter Module Title" value="{{name}}">
       </div>
       <h6>Current Marks</h6>
-        <div class="form-row">
-          <div class="col">
-            <div class="form-group">
-              <label for="moduleTitle">Marks</label>
-              <input type="text" class="form-control" id="currentMarks" placeholder="Your Marks" value="">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        {{#each current}}
+          <li class="nav-item">
+            <a class="nav-link" id="{{@index}}-tab" data-toggle="tab" href="#{{@index}}" role="tab" aria-controls="{{@index}}" aria-selected="true">{{incr @key}}</a>
+          </li>
+        {{/each}}
+        <li class="nav-item">
+          <a class="nav-link active" id="default-tab" data-toggle="tab" href="#default" role="tab" aria-controls="default" aria-selected="true" hidden>error</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="addModule-tab" data-toggle="tab" href="#addModule" role="tab" aria-controls="addModule" aria-selected="false">+</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        {{#each current}}
+          <div class="tab-pane fade mark-tab" id="{{@index}}" role="tabpanel" aria-labelledby="{{@index}}-tab">
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="moduleTitle">Assessment Name</label>
+                  <input type="text" class="form-control" id="{{@index}}-currentName" placeholder="Name of assessment" value="{{name}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="moduleTitle">Marks</label>
+                  <input type="text" class="form-control" id="{{@index}}-currentMarks" placeholder="Your Marks" value="{{score}}">
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="moduleTitle">Worth</label>
+                  <input type="text" class="form-control" id="{{@index}}-currentWorth" placeholder="% of the module" value="{{worth}}">
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col">
-            <div class="form-group">
-              <label for="moduleTitle">Worth</label>
-              <input type="text" class="form-control" id="currentWorth" placeholder="% of the module" value="">
-            </div>
-          </div>
-        </div>
+        {{/each}}
+
+        <div class="tab-pane active" id="default" role="tabpanel" aria-labelledby="default-tab">Please add a mark using the '+' tab above.</div>
+      </div>
     </script>
 
     <script id="results" type="text/x-handlebars-template">
