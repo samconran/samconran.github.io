@@ -1,10 +1,10 @@
 const AMGC = new Vue({
   data : {
-    
+
   }
 });
 
-Vue.component('displayModules', {
+Vue.component('DisplayModules', {
   data() {
     return {
       key: value
@@ -12,7 +12,7 @@ Vue.component('displayModules', {
   },
 });
 
-Vue.component('setModules', {
+Vue.component('SetModules', {
   data() {
     return {
       key: value
@@ -20,7 +20,7 @@ Vue.component('setModules', {
   },
 })
 
-Vue.component('results', {
+Vue.component('Results', {
   data() {
     return {
       key: value
