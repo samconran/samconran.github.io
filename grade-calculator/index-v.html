@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AMGC | samconran</title>
+    <!-- Load required Bootstrap and BootstrapVue CSS -->
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CMutationObserver" crossorigin="anonymous"></script>
+
+    <!-- Load Vue followed by BootstrapVue -->
+    <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="//unpkg.com/vuex@3.1.0/dist/vuex.min.js"></script>    
+    <script src="main.js" charset="utf-8"></script>
+  </head>
+  <body hidden>
+    <h2 id="title" class="text-center">The 'Alannah Moon' Grade Calculator</h2>
+
+    <div class="row" id="content">
+      <div id="module-container" class="container-fluid mb-3 mt-3 col-12 col-lg-6">
+        <!-- HANDLEBARS -->
+      </div>
+
+      <div id="results-container" class="col-12 col-lg-6">
+        <!-- HANDLEBARS -->
+      </div>
+    </div>
+
+    <div class="modal fade" id="addModule" tabindex="-1" role="dialog" aria-labelledby="addModuleTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModuleTitle">Add Module</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div id="addModuleForm" class="modal-body">
+            <!-- HANDLEBARS -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="save-module">Save changes</button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    <script id="modules" type="text/x-handlebars-template">
+      <h3>Modules</h3>
+      <div class="accordion mb-3" id="accordion">
+        {{#each modules}}
+        <div class="card module grades">
+          <div class="card-header" id="heading-{{id}}">
+            <h5 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{id}}" aria-expanded="true" aria-controls="collapse-{{id}}">{{@key}}</button>
+            </h5>
+          </div>
+
+          <div id="collapse-{{id}}" class="collapse" aria-labelledby="heading-{{id}}" data-parent="#accordion">
+            <div class="card-body">
+              <h5>Current Marks</h5>
+              <table class="table table-hover">
+                <tbody>
+                    {{#each current}}
+                    <tr>
+                      <th class="text-center" colspan="2">{{name}}</th>
+                    </tr>
+                    <tr>
+                      <th scope="row">Score</th>
+                      <td>{{score}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Module Worth</th>
+                      <td>{{worth}}</td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              <div class="mt-2">
+                <button type="button" class="btn btn-outline-danger deleteModule">Remove Module</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        <div class="card-header text-center" id="heading-add">
+          <h5 class="mb-0"><button class="btn btn-outline-primary addModuleBtn" type="button">ADD MODULE</button></h5>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-success" id="getResults">Calculate Needed Grades</button>
+      </div>
+    </script>
+
+    <script id="add-module" type="text/x-handlebars-template">
+      <div class="form-group">
+        <label for="moduleTitle">Module Title</label>
+        <input type="text" class="form-control" id="moduleTitle" placeholder="Enter Module Title" value="{{name}}">
+      </div>
+      <h6>Current Marks</h6>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        {{#each current}}
+          <li class="nav-item">
+            <a class="nav-link" id="{{@index}}-tab" data-toggle="tab" href="#{{@index}}" role="tab" aria-controls="{{@index}}" aria-selected="true">{{incr @key}}</a>
+          </li>
+        {{/each}}
+        <li class="nav-item">
+          <a class="nav-link active" id="default-tab" data-toggle="tab" href="#default" role="tab" aria-controls="default" aria-selected="true" hidden>error</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="addModule-tab" data-toggle="tab" href="#addModule" role="tab" aria-controls="addModule" aria-selected="false">+</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        {{#each current}}
+          <div class="tab-pane fade mark-tab" id="{{@index}}" role="tabpanel" aria-labelledby="{{@index}}-tab">
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="moduleTitle">Assessment Name</label>
+                  <input type="text" class="form-control" id="{{@index}}-currentName" placeholder="Name of assessment" value="{{name}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="moduleTitle">Marks</label>
+                  <input type="text" class="form-control" id="{{@index}}-currentMarks" placeholder="Your Marks" value="{{score}}">
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="moduleTitle">Worth</label>
+                  <input type="text" class="form-control" id="{{@index}}-currentWorth" placeholder="% of the module" value="{{worth}}">
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+
+        <div class="tab-pane active" id="default" role="tabpanel" aria-labelledby="default-tab">Please add a mark using the '+' tab above.</div>
+      </div>
+    </script>
+
+    <script id="results" type="text/x-handlebars-template">
+
+      <table class="table table-striped">
+        <tbody>
+          {{#each this}}
+            <tr class="table-info">
+              <th colspan="2" class="text-center">{{@key}}</th>
+            </tr>
+            <tr>
+              <th scope="row">Current Marks</th>
+              <td class="text-center">{{current}}</td>
+            </tr>
+            {{#each needed}}
+              <tr>
+                <th scope="row">{{@key}}</th>
+                <td class="{{#ifPassed this}}table-success{{/ifPassed}} {{#ifImpossible this}}table-danger{{/ifImpossible}} text-center">{{this}}</td>
+              </tr>
+            {{/each}}
+          {{/each}}
+        </tbody>
+      </table>
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  </body>
+</html>
