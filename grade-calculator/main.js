@@ -8,7 +8,7 @@ const store = new Vuex.Store({
   mutations: {
     addModule (state, module) {
       state.modules = state.modules.push(module);
-      calculateResults(module.id);
+      calculateResults(state, module.id);
     },
     calculateResults(state, moduleId)
     {
