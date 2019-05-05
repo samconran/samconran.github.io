@@ -1,8 +1,28 @@
 const store = new Vuex.Store({
   state: {
     modules : [
-      new Module('example', [40]),
-      new Module('another', [])
+      {
+        name : "example",
+        id: "example",
+        inputMarks: [
+          {
+            name : "test1",
+            score : 55,
+            worth : 50
+          }
+        ]
+      },
+      {
+        name : "another",
+        id: "another",
+        inputMarks: [
+          {
+            name : "test2",
+            score : 32,
+            worth : 40
+          }
+        ]
+      }
     ]
   },
   mutations: {
@@ -28,20 +48,6 @@ const store = new Vuex.Store({
     }
   }
 });
-
-/*
-{
-  name : "example",
-  id: "example",
-  inputMarks: [
-    {
-      name : "test1"
-      score : 55
-      worth : 50
-    }
-  ]
-}
-*/
 
 const AMGC = new Vue({
   store,
