@@ -24,7 +24,7 @@
         <display-modules></display-modules>
       </div>
       <div id="results-container" class="col-12 col-lg-6">
-        <!-- HANDLEBARS -->
+        <results></results>
       </div>
     </div>
 
@@ -95,6 +95,28 @@
         </div>
       </script>
 
+      <script id="display-results-template" type="text/x-template">
+        <table class="table table-striped">
+          <tbody>
+            <template v-for="module in modules">
+              <tr class="table-info">
+                <th colspan="2" class="text-center">{{ module.name }}</th>
+              </tr>
+              <tr>
+                <th scope="row">Current Marks</th>
+                <td class="text-center">{{ module.currentScore }}</td>
+              </tr>
+                <tr v-for="(r, grade) in module.requiredMarks">
+                  <th scope="row">{{ grade }}</th>
+                  <td class="text-center table-success" v-if="r <= 0"> &#10003 </td>
+                  <td class="text-center table-danger" v-else-if="r > 100"> &#10005 </td>
+                  <td class="text-center" v-else> {{r}} </td>
+                </tr>
+            </template>
+          </tbody>
+        </table>
+      </script>
+
       <script id="add-module" type="text/x-template">
         <div class="form-group">
           <label for="moduleTitle">Module Title</label>
@@ -147,28 +169,7 @@
       </div>
     </script>
 
-    <script id="results" type="text/x-template">
 
-      <table class="table table-striped">
-        <tbody>
-          {{#each this}}
-            <tr class="table-info">
-              <th colspan="2" class="text-center">{{@key}}</th>
-            </tr>
-            <tr>
-              <th scope="row">Current Marks</th>
-              <td class="text-center">{{current}}</td>
-            </tr>
-            {{#each needed}}
-              <tr>
-                <th scope="row">{{@key}}</th>
-                <td class="{{#ifPassed this}}table-success{{/ifPassed}} {{#ifImpossible this}}table-danger{{/ifImpossible}} text-center">{{this}}</td>
-              </tr>
-            {{/each}}
-          {{/each}}
-        </tbody>
-      </table>
-    </script>
 
     <script src="main.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
