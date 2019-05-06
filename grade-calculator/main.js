@@ -1,3 +1,5 @@
+Vue.config.devtools = true;
+
 const store = new Vuex.Store({
   state: {
     modules : [
@@ -49,19 +51,13 @@ const store = new Vuex.Store({
   }
 });
 
-const AMGC = new Vue({
-  store,
-  data : {
-
-  }
-});
-
 Vue.component('DisplayModules', {
   computed: {
     modules () {
       return this.$store.state.modules
     }
   },
+  template : "#display-modules-template"
 });
 
 Vue.component('Results', {
@@ -70,6 +66,11 @@ Vue.component('Results', {
       return this.$store.state.modules
     }
   },
+});
+
+const AMGC = new Vue({
+  store,
+  el: '#content'
 });
 
 function Module (name, marks) {
