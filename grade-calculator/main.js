@@ -45,11 +45,10 @@ const store = new Vuex.Store({
   mutations: {
     addModule (state, module) {
       module.id = module.name.toLowerCase().replace(/\s+/g, '-');
-      state.modules = state.modules.push(module);
-      calculateResults(state, module.id);
+      state.modules.push(module);
+      this.commit('calculateResults', module.id);
     },
-    calculateResults(state, moduleId)
-    {
+    calculateResults(state, moduleId) {
       let module = state.modules.find(obj => obj.id === moduleId),
           currentMarks = module.inputMarks,
           getScore = c => (c.score/100 * c.worth),
@@ -99,14 +98,6 @@ Vue.component('AddModule', {
         return `Please enter a valid module name with more than 3 characters (${this.moduleName.length}).`;
       else
         return `"${this.moduleName}" is already the name of a module.`;
-    },
-    assessmentNameState() {
-      let a = this.moduleInputMarks[this.moduleInputMarks.length - 1],
-          valid = (a.name.length > 0 && this.moduleInputMarks.filter(m=> (m.name === a.name)).length < 2);
-      return valid; 
-    },
-    assessmentNameInvalidFeedback() {
-
     }
   },
   data() {
@@ -122,7 +113,19 @@ Vue.component('AddModule', {
     }
   },
   methods : {
-    saveModule(){}
+    addMarks () {
+      this.moduleInputMarks.push({name: '', score: '', worth:  '' });
+    },
+    removeMarks(n) {
+      this.moduleInputMarks.splice(n,1);
+    },
+    saveModule () {
+      let module = {
+        name : this.moduleName,
+        inputMarks : this.moduleInputMarks
+      }
+      store.commit('addModule', module);
+    }
   },
   template : "#add-module-template"
 })

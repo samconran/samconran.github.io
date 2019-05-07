@@ -121,12 +121,12 @@
                   <b-tabs content-class="mt-3" fill>
                     <template v-for="(mark, index) in moduleInputMarks">
 
-                      <b-tab :title="(mark.name.length) ? (mark.name) : ('assessment ' + (index + 1))">
+                      <b-tab :title="(index + 1).toString()">
                         <div>
 
                           <b-form-group
                             :id="'assessmentNameInput' + index + 'Fieldset'"
-                            label="Enter assessment name:"
+                            label="Assessment Name:"
                             :label-for="'assessmentNameInput' + index"
                             :invalid-feedback="(mark.name.length <= 0) ? 'Name required' : 'Assessment name already used in this module.'"
                             :state="mark.name.length > 0 && moduleInputMarks.filter(m => (m.name === mark.name)).length < 2"
@@ -137,7 +137,7 @@
                           <b-form-row>
                               <b-form-group
                               :id="'assessmentScoreInput' + index + 'Fieldset'"
-                              label="Enter assessment score:"
+                              label="Assessment Score:"
                               :label-for="'assessmentScoreInput' + index"
                               invalid-feedback="Please enter a valid percentage."
                               :state="mark.score != '' && mark.score >= 0 && mark.score <= 100"
@@ -148,7 +148,7 @@
   
                             <b-form-group
                               :id="'assessmentWorthInput' + index + 'Fieldset'"
-                              label="Enter assessment worth:"
+                              label="Assessment Worth:"
                               :label-for="'assessmentNameInput' + index"
                               invalid-feedback="Please enter a valid percentage."
                               :state="mark.worth != '' && mark.worth >= 0 && mark.score <= 100"
@@ -158,11 +158,16 @@
                             </b-form-group>
                           </b-form-row>
 
+                          <div class="text-center">
+                            <b-button @click.prevent="removeMarks(index)" variant="outline-danger">delete assessment</b-button>
+                          </div>
+
                         </div>
                       </b-tab>  
                     </template>
-                    
-                    <b-tab title="+"></b-tab>
+                    <template slot="tabs">
+                      <b-nav-item @click.prevent="addMarks"><b>+</b></b-nav-item>
+                    </template>
                   </b-tabs>
 
                 </div>
@@ -172,7 +177,7 @@
                 <b-button variant="danger" @click="cancel()">
                   Cancel
                 </b-button>
-                <b-button variant="success" @click="ok()">
+                <b-button variant="success" @click="saveModule()">
                   Save
                 </b-button>
                 
