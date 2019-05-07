@@ -86,6 +86,15 @@ Vue.component('Results', {
   template : "#display-results-template"
 });
 
+Vue.component('AddModule', {
+  computed: {
+    modules () {
+      return this.$store.state.modules
+    }
+  },
+  template : "#add-module-template"
+})
+
 const AMGC = new Vue({
   store,
   el: '#content'

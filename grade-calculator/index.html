@@ -51,7 +51,6 @@
     <script id="display-modules-template" type="text/x-template">
       <div>
         <h3>Modules</h3>
-
         <div role="tablist" class="mb-4">
             <b-card no-body v-for="module in modules">
               <b-card-header header-tag="header" role="tab">
@@ -85,11 +84,10 @@
             </b-card>
             <b-card no-body>
               <b-card-header header-tag="header" role="tab" class="text-center">
-                <b-button href="#" variant="outline-primary">ADD MODULE</b-button>
+                  <add-module></add-module>
               </b-card-header>
             </b-card>
           </div>
-
         <div class="text-center">
           <button type="button" class="btn btn-success" id="getResults">Calculate Needed Grades</button>
         </div>
@@ -116,6 +114,28 @@
           </tbody>
         </table>
       </script>
+
+      <script id="add-module-template" type="text/x-template">
+        <div>
+          <b-button variant="outline-primary" v-b-modal.add-modal>ADD MODULE</b-button>
+
+          <b-modal id="add-modal" title="Add Module">
+            
+              <template slot="default">
+            
+            <template slot="modal-footer" slot-scope="{ ok, cancel }">
+                <b-button variant="danger" @click="cancel()">
+                  Cancel
+                </b-button>
+                <b-button variant="success" @click="ok()">
+                  Save
+                </b-button>
+                
+              </template>
+          </b-modal>
+        </div>
+      </script>
+
 
       <script id="add-module" type="text/x-template">
         <div class="form-group">
