@@ -90,7 +90,39 @@ Vue.component('AddModule', {
   computed: {
     modules () {
       return this.$store.state.modules
+    },
+    moduleNameState() {
+      return (this.moduleName.length >= 3 && !(this.modules.filter(m => (m.name === this.moduleName)).length));
+    },
+    moduleNameInvalidFeedback() {
+      if(this.moduleName.length < 3)
+        return `Please enter a valid module name with more than 3 characters (${this.moduleName.length}).`;
+      else
+        return `"${this.moduleName}" is already the name of a module.`;
+    },
+    assessmentNameState() {
+      let a = this.moduleInputMarks[this.moduleInputMarks.length - 1],
+          valid = (a.name.length > 0 && this.moduleInputMarks.filter(m=> (m.name === a.name)).length < 2);
+      return valid; 
+    },
+    assessmentNameInvalidFeedback() {
+
     }
+  },
+  data() {
+    return {
+      moduleName : '',
+      moduleInputMarks : [
+        {
+          name: '',
+          score: '',
+          worth:  ''        
+        }
+      ]
+    }
+  },
+  methods : {
+    saveModule(){}
   },
   template : "#add-module-template"
 })
