@@ -1,156 +1,146 @@
-$(document).ready(function(){
-  if($(this).width() > 991)
-    $('#title').addClass('display-4')
-  $('body').prop('hidden', false);
-  loadData();
-  renderContent('modules', data, 'module-container');
-});
+Vue.config.devtools = true;
 
-function saveData() {
-  var data = {
-    modules: window.data.modules
-  }
-  localStorage.setItem('gradesData', JSON.stringify(data));
-}
-
-function loadData() {
-  var data = localStorage.getItem('gradesData');
-  window.data = data ? JSON.parse(data) : {
-    modules : {}
-  }
-}
-
-function getResults() {
-  var m = data.modules;
-  var results = {};
-  for(var i in m){
-    results[i] = {
-      current : getCurrent(i),
-      needed : {
-        'Pass' : calculateResults(i, 40),
-        '2:2' : calculateResults(i, 50),
-        '2:1' : calculateResults(i, 60),
-        'First' : calculateResults(i, 70)
-      }
-    };
-  }
-  return results;
-
-  function getCurrent(moduleName) {
-    var total = 0,
-        current = window.data.modules[moduleName].current;
-    for (var i in current)
-      total += current[i].score/100 * current[i].worth
-    return total;
-  }
-
-  function calculateResults(moduleName, needed) {
-    var currentMarks = window.data.modules[moduleName].current,
-        currentScore = getCurrent(moduleName),
-        currentWorth = 0;
-    for (var i in currentMarks)
-      currentWorth += parseInt(currentMarks[i].worth);
-    var result = Math.ceil((needed - currentScore) / (100-currentWorth) * 100);
-
-    return (result > 0) ? ((result <= 100) ? result : '\u2715') : '\u2713';
-
-    // function getPercent(marks, worth) {
-    //     return (marks/100)*worth
-    // }
-    //
-    // function getRemaining(percent, worth, needed) {
-    //     var raw = needed - percent;
-    //     return (raw/worth) * 100;
-    // }
-  }
-}
-
-function renderContent (target, data, destination) {
-  var source = $('#' + target).html();
-  var template = Handlebars.compile(source);
-  var html = template(data);
-  $('#' + destination).html(html);
-  if(inline[target]) inline[target]();
-}
-
-window.inline = {
-  modules : function() {
-    $('.addModuleBtn').on('click', function(){
-      renderContent('add-module', data.tempMarks, 'addModuleForm');
-      $('#addModule').modal('show');
-    });
-    $('.deleteModule').on('click', function() {
-      var module = $(this).parent().parent().parent().parent().find('div h5 button').text();
-      delete data.modules[module];
-      renderContent('modules', data, 'module-container');
-      saveData();
-    });
-    $('#getResults').on('click', function(){
-      renderContent('results', getResults(), 'results-container')
-    });
+const store = new Vuex.Store({
+  state: {
+    modules : []
   },
-
-  'add-module' : function(){
-
-    $('#addModule-tab').on('click', function(e) {
-      e.preventDefault();
-      saveModuleData();
-      renderContent('add-module', data.tempModule, 'addModuleForm');
-      $('#'+(data.tempModule.current.length-1)+'-tab').tab('show');
-    });
-
-    $('#save-module').on('click', function(){
-      saveModuleData(true);
-      saveData();
-      $('#addModule').modal('hide');
-      renderContent('modules', data, 'module-container');
-      window.data.tempModule = {};
-    });
-
-    function saveModuleData(isFinal) {
-      var marks = [],
-          moduleName = $('#moduleTitle').val();
-      $('.mark-tab').each(function(i,v){
-        marks.push({
-          name: $('#'+i+'-currentName').val(),
-          score: $('#'+i+'-currentMarks').val(),
-          worth: $('#'+i+'-currentWorth').val()
-        });
-      });
-      if (!isFinal) {
-        marks.push({name: null, score: null, worth: null});
-        window.data.tempModule = new Module(moduleName, marks)
-      } else
-        data.modules[moduleName] = new Module(moduleName, marks)
+  mutations: {
+    addModule (state, module) {
+      module.id = module.name.toLowerCase().replace(/\s+/g, '-');
+      state.modules.push(module);
+      this.commit('calculateResults', module.id);
+    },
+    calculateResults(state, moduleId) {
+      let module = state.modules.find(obj => obj.id === moduleId),
+          currentMarks = module.inputMarks,
+          getScore = c => (c.score/100 * c.worth),
+          currentScore = currentMarks.reduce((a, b) => (a + getScore(b)), 0),
+          currentWorth = currentMarks.reduce((a,b) => (a + parseInt(b.worth)), 0),
+          getResult = (n) => Math.ceil((n - currentScore) / (100-currentWorth) * 100);
+      
+      module.currentScore = currentScore;
+      module.requiredMarks = {
+        'Pass' : getResult(40),
+        '2:2' : getResult(50),
+        '2:1' : getResult(60),
+        'First' : getResult(70)
+      }    
+    },
+    removeModule(state, index) {
+      state.modules.splice(index,1);
+    },
+    initialiseStore(state) {
+      if(localStorage.getItem('store')) {
+        this.replaceState(
+          Object.assign(state, JSON.parse(localStorage.getItem('store')))
+        );
+      }
     }
   }
-}
-
-function Module (name, marks) {
-  this.name = name;
-  this.id = truncate(name);
-  this.current = marks || [];
-  function truncate(s) {
-    return (s.toLowerCase().replace(/\s+/g, '-'));
-  }
-}
-
-Handlebars.registerHelper("incr", function(value, options) {
-    return parseInt(value) + 1;
 });
 
-Handlebars.registerHelper('ifPassed', function(data, options) {
-  if(data == '\u2713') {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
+Vue.component('DisplayModules', {
+  computed: {
+    modules () {
+      return this.$store.state.modules
+    }
+  },
+  methods : {
+    removeModule(i) {
+      this.$store.commit('removeModule', i);
+    }
+  },
+  template : "#display-modules-template"
 });
 
-Handlebars.registerHelper('ifImpossible', function(data, options) {
-  if(data == '\u2715') {
-    return options.fn(this);
-  } else {
-    return options.inverse(this);
-  }
+Vue.component('Results', {
+  computed: {
+    modules () {
+      return this.$store.state.modules
+    }
+  },
+  template : "#display-results-template"
+});
+
+Vue.component('AddModule', {
+  computed: {
+    modules () {
+      return this.$store.state.modules
+    },
+    moduleNameState() {
+      if (this.modules.length)
+        return this.moduleName.length >= 3 && !(this.modules.filter(m => (m.name === this.moduleName)).length);
+      else
+        return this.moduleName.length >= 3;
+    },
+    moduleNameInvalidFeedback() {
+      if(this.moduleName.length < 3)
+        return `Please enter a valid module name with more than 3 characters (${this.moduleName.length}).`;
+      else
+        return `"${this.moduleName}" is already the name of a module.`;
+    },
+    validFormData() {
+      return this.moduleNameState && this.moduleInputMarks.every(this.validateAssessmentName) && this.moduleInputMarks.every(this.validateAssessmentScore) && this.moduleInputMarks.every(this.validateAssessmentWorth);
+    }
+  },
+  data() {
+    return {
+      moduleName : '',
+      moduleInputMarks : [
+        {
+          name: '',
+          score: '',
+          worth:  ''        
+        }
+      ]
+    }
+  },
+  methods : {
+    validateAssessmentName(mark) {
+      return mark.name.length > 0 && this.moduleInputMarks.filter(m => (m.name === mark.name)).length < 2;
+    },
+    validateAssessmentScore(mark) {
+      return mark.score != '' && mark.score >= 0 && mark.score <= 100;
+    },
+    validateAssessmentWorth(mark) {
+      return mark.worth != '' && mark.worth >= 0 && mark.score <= 100;
+    },
+    addMarks () {
+      this.moduleInputMarks.push({name: '', score: '', worth:  '' });
+    },
+    removeMarks(n) {
+      this.moduleInputMarks.splice(n,1);
+    },
+    saveModule () {
+      let module = {
+        name : this.moduleName,
+        inputMarks : this.moduleInputMarks
+      }
+      this.$store.commit('addModule', module);
+      this.$bvModal.hide('add-modal');
+      this.resetData();
+    },
+    resetData() {
+      this.moduleName = '';
+      this.moduleInputMarks = [
+        {
+          name: '',
+          score: '',
+          worth:  ''        
+        }
+      ]
+    }
+  },
+  template : "#add-module-template"
+})
+
+const AMGC = new Vue({
+  store,
+  el: '#content',
+  beforeCreate() {
+    this.$store.commit('initialiseStore');
+    store.subscribe((_mutation, state) => {
+      localStorage.setItem('store', JSON.stringify(state));
+    });
+	}
 });
