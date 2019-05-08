@@ -15,7 +15,7 @@ const store = new Vuex.Store({
           currentMarks = module.inputMarks,
           getScore = c => (c.score/100 * c.worth),
           currentScore = currentMarks.reduce((a, b) => (a + getScore(b)), 0),
-          currentWorth = currentMarks.reduce((a,b) => (a + b.worth), 0),
+          currentWorth = currentMarks.reduce((a,b) => (a + parseInt(b.worth)), 0),
           getResult = (n) => Math.ceil((n - currentScore) / (100-currentWorth) * 100);
       
       module.currentScore = currentScore;
@@ -25,6 +25,16 @@ const store = new Vuex.Store({
         '2:1' : getResult(60),
         'First' : getResult(70)
       }    
+    },
+    removeModule(state, index) {
+      state.modules.splice(index,1);
+    },
+    initialiseStore(state) {
+      if(localStorage.getItem('store')) {
+        this.replaceState(
+          Object.assign(state, JSON.parse(localStorage.getItem('store')))
+        );
+      }
     }
   }
 });
@@ -33,6 +43,11 @@ Vue.component('DisplayModules', {
   computed: {
     modules () {
       return this.$store.state.modules
+    }
+  },
+  methods : {
+    removeModule(i) {
+      this.$store.commit('removeModule', i);
     }
   },
   template : "#display-modules-template"
@@ -101,12 +116,13 @@ Vue.component('AddModule', {
         name : this.moduleName,
         inputMarks : this.moduleInputMarks
       }
-      store.commit('addModule', module);
+      this.$store.commit('addModule', module);
+      this.$bvModal.hide('add-modal');
       this.resetData();
     },
     resetData() {
       this.moduleName = '';
-      moduleInputMarks = [
+      this.moduleInputMarks = [
         {
           name: '',
           score: '',
@@ -120,5 +136,11 @@ Vue.component('AddModule', {
 
 const AMGC = new Vue({
   store,
-  el: '#content'
+  el: '#content',
+  beforeCreate() {
+    this.$store.commit('initialiseStore');
+    store.subscribe((_mutation, state) => {
+      localStorage.setItem('store', JSON.stringify(state));
+    });
+	}
 });
