@@ -1,5 +1,3 @@
-Vue.config.devtools = true;
-
 const store = new Vuex.Store({
   state: {
     modules : []
