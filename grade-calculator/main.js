@@ -2,45 +2,7 @@ Vue.config.devtools = true;
 
 const store = new Vuex.Store({
   state: {
-    showResults : false,
-    modules : [
-      {
-        "name": "example",
-        "id": "example",
-        "inputMarks": [
-          {
-            "name": "test1",
-            "score": 100,
-            "worth": 50
-          }
-        ],
-        "currentScore": 50,
-        "requiredMarks": {
-          "Pass": -20,
-          "2:2": 0,
-          "2:1": 20,
-          "First": 40
-        }
-      },
-      {
-        "name": "another",
-        "id": "another",
-        "inputMarks": [
-          {
-            "name": "test2",
-            "score": 32,
-            "worth": 40
-          }
-        ],
-        "currentScore": 12.8,
-        "requiredMarks": {
-          "Pass": 46,
-          "2:2": 62,
-          "2:1": 79,
-          "First": 96
-        }
-      }
-    ]
+    modules : []
   },
   mutations: {
     addModule (state, module) {
@@ -91,13 +53,19 @@ Vue.component('AddModule', {
       return this.$store.state.modules
     },
     moduleNameState() {
-      return (this.moduleName.length >= 3 && !(this.modules.filter(m => (m.name === this.moduleName)).length));
+      if (this.modules.length)
+        return this.moduleName.length >= 3 && !(this.modules.filter(m => (m.name === this.moduleName)).length);
+      else
+        return this.moduleName.length >= 3;
     },
     moduleNameInvalidFeedback() {
       if(this.moduleName.length < 3)
         return `Please enter a valid module name with more than 3 characters (${this.moduleName.length}).`;
       else
         return `"${this.moduleName}" is already the name of a module.`;
+    },
+    validFormData() {
+      return this.moduleNameState && this.moduleInputMarks.every(this.validateAssessmentName) && this.moduleInputMarks.every(this.validateAssessmentScore) && this.moduleInputMarks.every(this.validateAssessmentWorth);
     }
   },
   data() {
@@ -113,6 +81,15 @@ Vue.component('AddModule', {
     }
   },
   methods : {
+    validateAssessmentName(mark) {
+      return mark.name.length > 0 && this.moduleInputMarks.filter(m => (m.name === mark.name)).length < 2;
+    },
+    validateAssessmentScore(mark) {
+      return mark.score != '' && mark.score >= 0 && mark.score <= 100;
+    },
+    validateAssessmentWorth(mark) {
+      return mark.worth != '' && mark.worth >= 0 && mark.score <= 100;
+    },
     addMarks () {
       this.moduleInputMarks.push({name: '', score: '', worth:  '' });
     },
@@ -125,6 +102,17 @@ Vue.component('AddModule', {
         inputMarks : this.moduleInputMarks
       }
       store.commit('addModule', module);
+      this.resetData();
+    },
+    resetData() {
+      this.moduleName = '';
+      moduleInputMarks = [
+        {
+          name: '',
+          score: '',
+          worth:  ''        
+        }
+      ]
     }
   },
   template : "#add-module-template"

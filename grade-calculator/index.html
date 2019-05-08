@@ -34,44 +34,41 @@
       <div>
         <h3>Modules</h3>
         <div role="tablist" class="mb-4">
-            <b-card no-body v-for="module in modules">
-              <b-card-header header-tag="header" role="tab">
-                <b-button block href="#" v-b-toggle="'accordion-' + module.id" variant="link">{{ module.name }}</b-button>
-              </b-card-header>
-              <b-collapse :id="'accordion-' + module.id" accordion="my-accordion" role="tabpanel">
-                <b-card-body>
-                    <h5>Current Marks</h5>
-                    <table class="table table-hover">
-                      <tbody>
-                        <template v-for="mark in module.inputMarks">
-                          <tr>
-                            <th class="text-center" colspan="2">{{ mark.name }}</th>
-                          </tr>
-                          <tr>
-                            <th scope="row">Score</th>
-                            <td>{{ mark.score }}</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">Module Worth</th>
-                            <td>{{ mark.worth }}</td>
-                          </tr>
-                        </template>
-                      </tbody>
-                    </table>
-                    <div class="mt-2">
-                      <button type="button" class="btn btn-outline-danger deleteModule">Remove Module</button>
-                    </div>
-                </b-card-body>
-              </b-collapse>
-            </b-card>
-            <b-card no-body>
-              <b-card-header header-tag="header" role="tab" class="text-center">
-                  <add-module></add-module>
-              </b-card-header>
-            </b-card>
-          </div>
-        <div class="text-center">
-          <button type="button" class="btn btn-success" id="getResults">Calculate Needed Grades</button>
+          <b-card no-body v-for="module in modules">
+            <b-card-header header-tag="header" role="tab">
+              <b-button block href="#" v-b-toggle="'accordion-' + module.id" variant="link">{{ module.name }}</b-button>
+            </b-card-header>
+            <b-collapse :id="'accordion-' + module.id" accordion="my-accordion" role="tabpanel">
+              <b-card-body>
+                  <h5>Current Marks</h5>
+                  <table class="table table-hover">
+                    <tbody>
+                      <template v-for="mark in module.inputMarks">
+                        <tr>
+                          <th class="text-center" colspan="2">{{ mark.name }}</th>
+                        </tr>
+                        <tr>
+                          <th scope="row">Score</th>
+                          <td>{{ mark.score }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Module Worth</th>
+                          <td>{{ mark.worth }}</td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                  <div class="mt-2">
+                    <button type="button" class="btn btn-outline-danger deleteModule">Remove Module</button>
+                  </div>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+          <b-card no-body>
+            <b-card-header header-tag="header" role="tab" class="text-center">
+                <add-module></add-module>
+            </b-card-header>
+          </b-card>
         </div>
       </div>
       </script>
@@ -117,7 +114,7 @@
                   </b-form-group>
 
                   <h6>Current Marks</h6>
-                  <p>Please enter your assignment marks here. You should enter the assignment name, the score you recieved, and much that assignment is worth in relation to the module.</p>
+                  <p>Please enter your assignment marks here. You should enter the assignment name, the score you recieved, and how much that assignment is worth in relation to the module.</p>
                   <b-tabs content-class="mt-3" fill>
                     <template v-for="(mark, index) in moduleInputMarks">
 
@@ -129,9 +126,9 @@
                             label="Assessment Name:"
                             :label-for="'assessmentNameInput' + index"
                             :invalid-feedback="(mark.name.length <= 0) ? 'Name required' : 'Assessment name already used in this module.'"
-                            :state="mark.name.length > 0 && moduleInputMarks.filter(m => (m.name === mark.name)).length < 2"
+                            :state="validateAssessmentName(mark)"
                           >
-                            <b-form-input :id="'assessmentNameInput' + index" v-model="mark.name" :state="mark.name.length > 0 && moduleInputMarks.filter(m => (m.name === mark.name)).length < 2" trim></b-form-input>
+                            <b-form-input :id="'assessmentNameInput' + index" v-model="mark.name" :state="validateAssessmentName(mark)" trim></b-form-input>
                           </b-form-group>
                           
                           <b-form-row>
@@ -140,10 +137,10 @@
                               label="Assessment Score:"
                               :label-for="'assessmentScoreInput' + index"
                               invalid-feedback="Please enter a valid percentage."
-                              :state="mark.score != '' && mark.score >= 0 && mark.score <= 100"
+                              :state="validateAssessmentScore(mark)"
                               class="mr-sm-auto"
                             >
-                              <b-form-input :id="'assessmentScoreInput' + index" v-model="mark.score" :state="mark.score != '' && mark.score >= 0 && mark.score <= 100" trim></b-form-input>
+                              <b-form-input :id="'assessmentScoreInput' + index" v-model="mark.score" :state="validateAssessmentScore(mark)" trim></b-form-input>
                             </b-form-group>
   
                             <b-form-group
@@ -151,10 +148,10 @@
                               label="Assessment Worth:"
                               :label-for="'assessmentNameInput' + index"
                               invalid-feedback="Please enter a valid percentage."
-                              :state="mark.worth != '' && mark.worth >= 0 && mark.score <= 100"
+                              :state="validateAssessmentWorth(mark)"
                               right
                             >
-                              <b-form-input :id="'assessmentWorthInput' + index" v-model="mark.worth" :state="mark.worth != '' && mark.worth >= 0 && mark.score <= 100" trim></b-form-input>
+                              <b-form-input :id="'assessmentWorthInput' + index" v-model="mark.worth" :state="validateAssessmentWorth(mark)" trim></b-form-input>
                             </b-form-group>
                           </b-form-row>
 
@@ -177,7 +174,7 @@
                 <b-button variant="danger" @click="cancel()">
                   Cancel
                 </b-button>
-                <b-button variant="success" @click="saveModule()">
+                <b-button variant="success" @click="saveModule()" :disabled="!validFormData">
                   Save
                 </b-button>
                 
