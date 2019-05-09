@@ -64,3 +64,12 @@ p, a {
 .project-div p {
     font-size: 15px + 0.3vw;
 }
+
+@media only screen and (max-width: 768px) {
+
+  .project-div {
+    max-width: 85%;
+    margin-bottom: 2vw;
+  }
+
+}
