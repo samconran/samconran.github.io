@@ -9,6 +9,13 @@ const store = new Vuex.Store({
       state.modules.push(module);
       this.commit('calculateResults', module.id);
     },
+    ammendModule (state, payload) {
+      let index = payload.index,
+          module = payload.module;
+      module.id = module.name.toLowerCase().replace(/\s+/g, '-');
+      Vue.set(state.modules, index, module);
+      this.commit('calculateResults', module.id);
+    },
     calculateResults(state, moduleId) {
       let module = state.modules.find(obj => obj.id === moduleId),
           currentMarks = module.inputMarks,
@@ -101,9 +108,8 @@ Vue.component('AddModule', {
   watch : {
     moduleToEdit(newVal) {
       if (newVal != null) {
-        module = this.modules[newVal];
-        this.moduleName = module.name;
-        this.moduleInputMarks = module.inputMarks;
+        this.moduleName = this.modules[newVal].name;
+        this.moduleInputMarks = this.modules[newVal].inputMarks.map(a => ({...a}));;
         this.editing = true;
       }
       else
@@ -131,7 +137,7 @@ Vue.component('AddModule', {
       return mark.score != '' && mark.score >= 0 && mark.score <= 100;
     },
     validateAssessmentWorth(mark) {
-      return mark.worth != '' && mark.worth >= 0 && mark.score <= 100;
+      return mark.worth != '' && mark.worth >= 0 && mark.worth <= 100;
     },
     addMarks () {
       this.moduleInputMarks.push({name: '', score: '', worth:  '' });
@@ -144,7 +150,15 @@ Vue.component('AddModule', {
         name : this.moduleName,
         inputMarks : this.moduleInputMarks
       }
-      this.$store.commit('addModule', module);
+      if (this.editing) {
+        let payload = {
+          module,
+          index : this.moduleToEdit
+        }
+        this.$store.commit('ammendModule', payload);
+      }
+      else
+        this.$store.commit('addModule', module);      
       this.$bvModal.hide('add-modal');
       this.resetData();
     },
