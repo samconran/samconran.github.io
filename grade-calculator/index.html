@@ -44,7 +44,7 @@
                   <h5>Current Marks</h5>
                   <table class="table table-hover">
                     <tbody>
-                      <template v-for="mark in module.inputMarks">
+                      <template v-for="mark in module.inputMarks" :key="mark.name">
                         <tr>
                           <th class="text-center" colspan="2">{{ mark.name }}</th>
                         </tr>
@@ -101,7 +101,7 @@
         <div>
           <b-button variant="outline-primary" v-b-modal.add-modal>ADD MODULE</b-button>
 
-          <b-modal id="add-modal" ref="add-modal" title="Add Module" @hide="resetData">
+          <b-modal id="add-modal" ref="add-modal" title="Add Module" @hide="resetData()">
             
             <template slot="default">
               <div class="text-left">
