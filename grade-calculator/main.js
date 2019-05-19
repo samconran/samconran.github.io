@@ -1,6 +1,7 @@
 const store = new Vuex.Store({
   state: {
-    modules : []
+    modules : [],
+    moduleToEdit : null
   },
   mutations: {
     addModule (state, module) {
@@ -27,11 +28,15 @@ const store = new Vuex.Store({
     removeModule(state, index) {
       state.modules.splice(index,1);
     },
+    editModule(state, index) {
+      state.moduleToEdit = index;
+    },
     initialiseStore(state) {
       if(localStorage.getItem('store')) {
         this.replaceState(
           Object.assign(state, JSON.parse(localStorage.getItem('store')))
         );
+        state.moduleToEdit = null;
       }
     }
   }
@@ -46,6 +51,10 @@ Vue.component('DisplayModules', {
   methods : {
     removeModule(i) {
       this.$store.commit('removeModule', i);
+    },
+    editModule(i) {
+      this.$store.commit('editModule', i);
+      this.$bvModal.show('add-modal');
     }
   },
   template : "#display-modules-template"
@@ -65,11 +74,19 @@ Vue.component('AddModule', {
     modules () {
       return this.$store.state.modules
     },
+    moduleToEdit() {
+      return this.$store.state.moduleToEdit
+    },
     moduleNameState() {
+      let validLength = this.moduleName.length >= 3;
+
       if (this.modules.length)
-        return this.moduleName.length >= 3 && !(this.modules.filter(m => (m.name === this.moduleName)).length);
+        if(this.editing)
+          return validLength && (this.modules.filter(m => (m.name === this.moduleName)).length < 2);
+        else
+          return validLength && !(this.modules.filter(m => (m.name === this.moduleName)).length);
       else
-        return this.moduleName.length >= 3;
+        return validLength;
     },
     moduleNameInvalidFeedback() {
       if(this.moduleName.length < 3)
@@ -81,8 +98,21 @@ Vue.component('AddModule', {
       return this.moduleNameState && this.moduleInputMarks.every(this.validateAssessmentName) && this.moduleInputMarks.every(this.validateAssessmentScore) && this.moduleInputMarks.every(this.validateAssessmentWorth);
     }
   },
+  watch : {
+    moduleToEdit(newVal) {
+      if (newVal != null) {
+        module = this.modules[newVal];
+        this.moduleName = module.name;
+        this.moduleInputMarks = module.inputMarks;
+        this.editing = true;
+      }
+      else
+        this.resetData();
+    }
+  },
   data() {
     return {
+      editing : false,
       moduleName : '',
       moduleInputMarks : [
         {
@@ -119,6 +149,7 @@ Vue.component('AddModule', {
       this.resetData();
     },
     resetData() {
+      this.editing = false;
       this.moduleName = '';
       this.moduleInputMarks = [
         {
@@ -126,7 +157,8 @@ Vue.component('AddModule', {
           score: '',
           worth:  ''        
         }
-      ]
+      ];
+      this.$store.commit('editModule', null);
     }
   },
   template : "#add-module-template"
