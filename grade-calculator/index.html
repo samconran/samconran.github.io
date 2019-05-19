@@ -60,6 +60,7 @@
                     </tbody>
                   </table>
                   <div class="mt-2">
+                    <button type="button" class="btn btn-outline-danger" @click="editModule(index)">Edit Module</button>
                     <button type="button" class="btn btn-outline-danger" @click="removeModule(index)">Remove Module</button>
                   </div>
               </b-card-body>
@@ -100,7 +101,7 @@
         <div>
           <b-button variant="outline-primary" v-b-modal.add-modal>ADD MODULE</b-button>
 
-          <b-modal id="add-modal" title="Add Module">
+          <b-modal id="add-modal" ref="add-modal" title="Add Module" @hide="resetData">
             
             <template slot="default">
               <div class="text-left">
